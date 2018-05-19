@@ -1,0 +1,25 @@
+<div class="container">
+<div class="job-applied-status" ng-controller="jobsAppliesStatusController">
+    <h3 class="panel-title ver-space sep-bot">{{'Applied Resume -'|translate}} {{job_apply_status_view.job.title | capitalize}}</h3>
+    <div class="media">
+        <div class="navbar-left"> <img ng-src="{{user.logo_url}}" class="img-responsive user-med center-block"> </div>
+        <div class="media-body">
+            <div class="row">
+                <div class="col-md-10">
+                    <h4><a href="users/{{job_apply_status_view.user.id}}/{{job_apply_status_view.user.username}}">{{job_apply_status_view.user.username}}</a></h4>
+                    <div class="navbar-left"> <span for="latitude" class="control-label">{{'Rating'|translate}}</span> </div>
+                    <div class="">
+                        <input-stars ng-model="rating_avg" max="{{StarCount.JobsResume}}" readonly="true"></input-stars>
+                    </div>
+                    <p>{{job_apply_status_view.cover_letter}}</p>
+                </div>
+                <div class="col-md-2"> 
+                  <span class="btn btn-primary btn-sm"  ng-if="job_apply_status_view.attachment" download-file attachment="{{job_apply_status_view.attachment}}" downloadlable="<i class='fa fa-download'> </i>"></span> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="bot-space-10 big-mspace"> <span>{{job_apply_status_view.cover_letter}}</span> </div>-->
+    <resume_rating_view></resume_rating_view>
+</div>
+</div>

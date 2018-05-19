@@ -1,0 +1,25 @@
+<section class="jobs-blk">
+    <div class="container">
+        <h3 class="home-title-blk">{{'jobs online'|translate}}</h3>
+        <div class="row" ng-show="jobs.length > 0">
+            <div class="col-md-3  col-xs-6 jobs-list" ng-repeat="job in jobs">
+                <div class="jobs-info-blk">
+                    <a href="#" class="show text-center"><img ng-src="{{job.logo_url}}" alt="[Image: {{job.title}}]" title="{{job.title}}"> </a>
+                    <h4 class="text-16 jobs-name">{{job.title | capitalize}}</h4> <address><i class="fa fa-map-marker greenc" aria-hidden="true"></i> {{job.country.name}}, {{job.country.iso_alpha2}}</address>
+                    <p class="grayc text-12 opening-count">{{'No of Opening'|translate}} - {{job.no_of_opening}}</p>
+                    <p class="grayc text-12">{{'Experience'|translate}} - <span ng-if = "job.minimum_experience === 0 && job.maximum_experience === 0"> 0 {{'years'|translate}}</span>
+                                    <span ng-if = "job.minimum_experience > 0 || job.maximum_experience > 0"> {{job.minimum_experience}} - {{job.maximum_experience}} {{'years'|translate}}</span></p>
+                    <p class="text-center req-btn no-mar"><a ui-sref="jobs_view({id:job.id})" class="btn gradi-rnd-btn btn-rounded text-uppercase">{{'apply now'|translate}}</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="jobs.length == 0">
+            <div class="text-center text-danger">
+                <p>{{'No records available'|translate}}</p>
+            </div>
+        </div>
+        <div class="col-xs-12 text-center top-mspace" ng-show="jobs.length > 0"> <a ui-sref="jobs()" title="See more jobs" class="btn btn-primary btn-catergory text-uppercase">
+        {{'See more jobs'|translate}} 
+      </a> </div>
+    </div>
+</section>

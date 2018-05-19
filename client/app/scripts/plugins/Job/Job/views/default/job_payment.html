@@ -1,0 +1,127 @@
+<div class="section photo-view" ng-controller="JobPaymentsController">
+    <div class="container" ng-show="job_view.user_id == userId">
+        <div class="row"> <br>
+            <div class="clearfix">
+                <h3 class="panel-title ver-mspace text-22 head-bot">{{'Listing fee for'|translate}} {{job_view.title | capitalize}}</h3>
+                <div class="job-body">
+                    <div class="col-md-2"> <img ng-src="{{job_view.logo_url}}" class="img-responsive"> </div>
+                    <div class="col-md-8">
+                        <div class="jobs-report-share">
+                            <!--<span class="report cursor" ng-click="jobReport()" ng-if="job_view.user_id != user.id && isAuth"> <i class="fa fa-flag"> Report Job </i>   </span> <span ng-show="!isAuth">
+                            <a ui-sref="users_login()"> <i class="fa fa-flag"> Report Job </i></a> 
+                            </span> <span class="share cursor"> <i class="fa fa-share">  Share </i> </span>-->
+                        </div>
+                        <div class="job-info">
+                            <table>
+                                <tr>
+                                    <td class="col-md-4"> <label> {{'Job Type'|translate}} </label> </td>
+                                    <td> {{job_view.job_type.name}} </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4"> <label> {{'Skills'|translate}} </label> </td>
+                                    <td> <span ng-repeat=" skills in job_view.job_skill"> 
+                                        <!--{{$first ? '' : $last ? ' , ' : ', '}}   -->
+                                        <span class="cursor text-info" ng-click="jobFilter(skills.skill_id, 1)"> {{skills.skill.name | capitalize}}{{!$last?', ':''}} </span>                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4"> <label> {{'Category'|translate}} </label> </td>
+                                    <td> <span class="cursor text-info" ng-click="jobFilter(job_view.job_category_id, 2)"> 
+                                            {{job_view.job_category.name}} 
+                                        </span> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4"> <label>{{'Location'|translate}} </label> </td>
+                                    <td> 
+                                        <i class="flag-icon flag-icon-{{job_view.country.iso_alpha2 | lowercase}}"> </i> {{job_view.full_address}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4"> <label> {{'Experience'|translate}} </label> </td>
+                                    <td ng-if = "job_view.minimum_experience === 0 && job_view.maximum_experience === 0"> 0 {{'years'|translate}}</td>
+                                    <td ng-if = "job_view.minimum_experience > 0 || job_view.maximum_experience > 0"> {{job_view.minimum_experience}} - {{job_view.maximum_experience}} {{'years'|translate}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4"> <label> {{'Openings'|translate}} </label> </td>
+                                    <td> {{job_view.no_of_opening}} </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="jobs-apply" ng-if="job_view.user_id != user.id">
+                            <div class="salary_info" ng-if="job_view.is_show_salary">
+                                <div> Salary </div>
+                                <div class="salary"> 
+                                    <label> {{job_view.salary_from}} {{'to'|translate}} {{job_view.salary_to}} </label> 
+                                </div>
+                                <div class="salary_type"> {{job_view.salary_type.name}} </div>
+                            </div> 
+                            <span ng-show="job_view.apply_via==='via_our_site' && isAuth">
+                                <button class="btn btn-primary" ng-click="jobApply()" ng-if="!is_job_apply"> {{'Apply Now' | translate}}</button> 
+                                <button class="btn btn-primary" ng-disabled="true" ng-if="is_job_apply"> {{'Applied' | translate}}</button> 
+                            </span> 
+                            <span ng-show="job_view.apply_via==='via_company' && isAuth">
+                                <a class="btn btn-primary" href="{{job_view.job_url}}" target="_blank"> {{'Apply Now' | translate}}</a> 
+                            </span> 
+                            <span ng-show="!isAuth">
+                                <a class="btn btn-primary" ui-sref="users_login()"> {{'Apply Now' | translate}}</a> 
+                            </span> 
+                        </div>
+                        <div class="jobs-apply" ng-if="job_view.user_id == user.id"> 
+                            <a ui-sref="jobs_edit({id:job_view.id})" class="btn btn-primary">{{'Edit'|translate}}</a> 
+                        </div>
+                    </div>
+                </div>
+            </div> <br> 
+        </div>
+        <div class="row" ng-show="job_view.job_status_id == 2">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()">x</button>
+                <h3>{{'Orders' | translate}}</h3>
+            </div>
+            <div class="modal-body" ng-controller="JobPaymentsController">
+                <div class="">
+                    <div class="">
+                        <div class="clearfix">
+                            <form name="PaymentForm" role="form" ng-submit="PaymentFormSubmit(PaymentForm.$valid)">
+                                <div class="panel navbar-btn clearfix">
+                                    <div class="panel-body col-xs-12">
+                                        <!--<div class="form-group col-sm-5 col-sm-offset-3 col-xs-9"> <input ng-change="ClearCoupon()" ng-model="plan.coupon" title="{{'Please enter your coupon'|translate}}" placeholder="{{'Coupon Code'|translate}}" class="form-control" id="inputCoupon3" autocomplete="off"> </div>
+                                        <button type="button" class="btn btn-primary pull-left" ng-click="applyCoupon()">{{'Apply'|translate}}</button>-->
+                                        <div class="col-xs-12 text-center navbar-btn">
+                                            <p class="text-22 textb" ng-show="quote_request_views_detail.quote_amount && show_discount"> {{"Price" | translate }} 
+                                                
+                                                <amount-display  amount='{{quote_request_views_detail.quote_amount}}' ng-if="quote_request_views_detail.quote_amount"></amount-display> 
+                                                </p>
+                                            <p class="text-22 textb" ng-show="show_discount"> {{"Coupon discount" | translate }} {{show_discount}}</p>
+                                            <p class="text-22 textb"> {{"You have to pay" | translate }} 
+                                                <amount-display  amount='{{plan_info.price_final}}' ng-if="plan_info.price_final"></amount-display>
+                                                </p>
+                                        </div>
+                                    </div>
+                                    <div ng-include="'views/gateway.html'" class="col-xs-12"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="job_view.job_status_id == 4">
+                <div class="section">
+                    <div class="container">
+                        <div class="row">
+                            <p>{{'Payment Completed'|translate}}</p>
+                            <h3 class="panel-title">{{'Description'|translate}}</h3>
+                            <p ng-bind-html="job_view.description"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+    <div ng-show="job_view.user_id != userId">
+        <div ng-include="'client/app/404.html'"></div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+ <section class="recent-jobs">
+            <div class="container">
+                <h2 class="text-uppercase text-center text-24 textb bot-20-mar montserrat-bold">{{'Featured Jobs'|translate}}</h2>
+                <div class="row bot-15-space">
+                    <div class="col-md-3 col-xs-6 jobs-list" ng-repeat="featured_job in featured_jobs">
+                        <div class="jobs-info-blk">
+                            <a href="#" class="show text-center"><img src="{{featured_job.featured_job_image}}" alt="[Image: {{featured_job.title}}]" title="{{featured_job.title}}"> </a>
+                            <h4 class="text-16 jobs-name htruncate-2" title="{{featured_job.title}}">{{featured_job.title}}</h4>
+                            <address class="h-truncate"><i class="fa fa-map-marker greenc" aria-hidden="true"></i> {{featured_job.address}}</address>
+                            <p class="grayc text-12 opening-count">{{'No of Opening'|translate}}: {{featured_job.no_of_opening}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 text-center top-mspace">	
+                    <a href="jobs" title="See more jobs" class="btn btn-primary btn-catergory text-uppercase">{{'See more jobs'|translate}} </a>
+                </div>
+            </div>
+        </section>

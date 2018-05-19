@@ -1,0 +1,47 @@
+<div class="job-applies tabs-block gray-bg-light">
+    <div class="container" ng-controller="JobsAppliedController">
+        <div class="row">
+            <div class="col-md-4">
+                <h3 class="no-mar">Applied Jobs</h3>
+            </div>
+            <div class="col-xs-12">
+                <div class="table-block text-center">
+                    <div class="table-responsive top-space-10">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">{{'Applied for' | translate}}</th>
+                                    <th class="text-center"> {{'Job Location' | translate}} </th>
+                                    <th class="text-center"> {{'Salary' | translate}} </th>
+                                    <th class="text-center">{{'Applied On' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="applyjobs.length > 0">
+                                <tr ng-repeat="applyjob in applyjobs">
+                                    <td><span class="right-sspace"><img ng-src="{{applyjob.logo_url}}" alt="Companylogo"></span><a ui-sref="jobs_view({id:applyjob.job.id})">{{applyjob.job.company_name}}</a></td>
+                                    <td><span class="right-sspace"><i class="flag-icon flag-icon-{{applyjob.job.country.iso_alpha2 | lowercase}}"> </i> {{applyjob.job.address}}</span></td>
+                                    <td> <span class="right-sspace" ng-if="applyjob.job.is_show_salary">
+                                <amount-display  amount='{{applyjob.job.salary_from}}' ng-if="quotapplyjob.job.salary_from"></amount-display>   to
+                                <amount-display  amount='{{applyjob.job.salary_to}}' ng-if="quotapplyjob.job.salary_to"></amount-display>
+                               <br>
+                                         {{SalaryType[applyjob.job.salary_type_id]}}</span>                                        <span class="text-center c" ng-if="!applyjob.job.is_show_salary">-</span> </td>
+                                    <td><span class="right-sspace">{{applyjob.created_at | date_format : DateFormat.view }}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="text-center">
+                <div class="text-danger ver-mspace" ng-show="applyjobs.length == 0"> {{'No records available' | translate}} </div>
+            </div>
+        </div>
+        <div class="row" ng-show="currentPage > 1">
+            <div class="col-md-12 text-center">
+                <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

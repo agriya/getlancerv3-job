@@ -1,0 +1,223 @@
+<main id="main" class="main" ng-controller="jobsController">
+    <!-- Binding-Freelancer: START -->
+    <section class="binding-freelancer jobs-freelancer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4 class="text-22 bot-mspace">{{'Browse Jobs'| translate}}</h4>
+                    <form class="form-horizontal" ng-submit="refinesearch(data)" novalidate>
+                        <div class="form-group has-feedback"> <label for="Search" class="control-label col-md-2 col-sm-4">{{'Search'|translate}}</label>
+                            <div class="col-md-10 col-sm-8"> <input type="text" id="Search" ng-model="data.q" placeholder="{{'Search for Jobs'|translate}}" class="form-control"> </div>
+                        </div>
+                        <div class="form-group has-feedback"> <label for="Search" class="control-label col-md-2 col-sm-4">{{'Categories'| translate}}</label>
+                            <div class="col-md-10 col-sm-8">
+                                <tags-input ng-model="data.category_select" placeholder="{{'Type to Filter Jobs by Categories'|translate}}" on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" add-from-autocomplete-only="true">
+                                    <auto-complete source="loadCategories($query)"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback"> <label for="Search" class="control-label col-md-2 col-sm-4">{{'Skills'| translate}}</label>
+                            <div class="col-md-10 col-sm-8">
+                                <tags-input ng-model="data.skill_select" placeholder="{{'Type to Filter Jobs by Skills'|translate}}" on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" add-from-autocomplete-only="true">
+                                    <auto-complete min-length="1" debounce-delay="0" source="loadSkills($query)"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback"> <label for="Search" class="control-label col-md-2 col-sm-4 search">{{'Job types'| translate}}</label>
+                            <div class="col-md-10 col-sm-8">
+                                <ul class="list-inline">
+                                    <li class="checkbox" ng-repeat="jobType in types"> <label for="checkbox{{$index}}" class="custom-checkbox">
+                                         <input type="checkbox" name="job_types" id="checkbox{{$index}}" checklist-model="jobtype_select" ng-model="jobtype_select" checklist-value="jobType.id" ng-change="check(jobType.id, checked)">
+                                        <span>{{jobType.name}}</span>
+                                    </label> </li>
+                                    <!--<li class="checkbox">
+                                   <label for="checkbox2" class="custom-checkbox">
+                                        <input type="checkbox" name="job_types" id="checkbox2" checklist-model="jobtype_select" ng-model="jobtype_select" checklist-value="2" ng-change="check(2, checked)">
+                                        <span>Part time</span>
+                                    </label>
+                                </li>
+                                <li class="checkbox">
+                                    <label for="checkbox3" class="custom-checkbox">
+                                        <input type="checkbox" name="job_types" id="checkbox3" checklist-model="jobtype_select" ng-model="jobtype_select" checklist-value="3" ng-change="check(3, checked)">
+                                        <span>Full time</span>
+                                    </label>
+                                </li>-->
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <div class="col-md-12 col-sm-12"> <button type="submit" class="btn btn-success pull-right">{{'Search'| translate}}</button> </div>
+                        </div>
+                    </form> <br> </div>
+                <!-- project-contest: START -->
+                <div class="col-xs-12">
+                    <div class="project-contest">
+                        <div class="clearfix">
+                            <div class="navbar-left">
+                                <p class="grayc">{{'Showing' | translate}} <strong class="blackc" ng-if="jobs.length > 0">{{totalItems}}</strong> <strong class="blackc" ng-if="jobs.length == 0">0 </strong>{{' were found based on your criteria'| translate}}</p>
+                            </div>
+                            <!--<ul class="list-inline navbar-right">
+                                <li>
+                                    <ul class="list-inline">
+                                        <li class="grayc">Sort by:</li>                                                
+                                        <li class="sort">
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                Newest<span><i class="fa fa-angle-down fa-fw"></i></span>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                    <li><a href="#">Newest</a></li>                                                            
+                                                </ul>
+                                            </div> 
+                                        </li>
+                                    </ul>                                                
+                                </li>
+                                <li>
+                                    <ul class="list-inline">  
+                                        <li class="grayc">View</li>
+                                        <li>
+                                            <div class="dropdown view">
+                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                <i class="fa fa-th fa-fw"></i><span><i class="fa fa-angle-down fa-fw"></i></span>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                    <li><a href="#"><i class="fa fa-th"></i></a></li> 
+                                                    <li><a href="#"><i class="fa fa-list"></i></a></li>                                                            
+                                                </ul>
+                                            </div> 
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="visible-xs">
+                                    <ul class="list-inline">
+                                        <li class="grayc">Date:</li>
+                                        <li><a href="#" class="btn btn-default text-uppercase">started <i class="fa fa-angle-down"></i></a></li>
+                                    </ul>
+                                </li>
+                            </ul>  -->
+                        </div>
+                        <div class="clearfix">
+                            <ul class="list-group">
+                                <li class="list-group-item project-heading hidden-xs">
+                                    <div class="row">
+                                        <div class="col-md-7 col-sm-6">
+                                            <h5>{{'Title of Jobs'|translate}}</h5>
+                                        </div>
+                                        <div class="col-md-5 col-sm-6 text-center">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <h5 class="opening">{{'No. of Opening'| translate}}</h5>
+                                                </div>
+                                                <!--<div class="col-sm-4">-->
+                                                    <!--<h5 class="dropdown">{{'End Date'| translate}}</h5>-->
+                                                    <!--<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                        <li><a href="#">Started</a></li>
+                                                        <li><a href="#">end</a></li>
+                                                    </ul>
+                                                </div>-->
+                                                <div class="col-sm-8">
+                                                    <div class="text-right">
+                                                        <h5>{{'Action'|translate}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item project-content" ng-repeat="job in jobs" ng-if="jobs.length > 0">
+                                     <div class="clearfix">
+                                    <div class="row">
+                                        <div class="col-md-7 col-sm-6">
+                                            <h5 class="visible-xs">{{'Title of Jobs'| translate}}</h5>
+                                            <div class="media">
+                                                <div class="pull-left"> <img ng-src="{{job.logo_url}}" alt="Companylogo" class="img-circle center-block user-med" /> </div>
+                                                <div class="media-body jobs-status">
+                                                    <h5 class="text-18"><a ui-sref="jobs_view({id:job.id})">{{job.title}}</a></h5>
+                                                    <p class="multiline-ellipsis"><i class="flag-icon flag-icon-{{job.country.iso_alpha2 | lowercase}}"> </i> {{job.city.name}} , {{job.country.name}}</span>
+                                                    </p>
+                                                    <span  class="label label-info label-orage Featured inline-span" ng-if ="job.is_featured"> {{'Featured'|translate}}</span>
+                                                    <span ng-if ="job.is_urgent"  class="label label-info inline-span label-blue Urgent"> {{'Urgent'|translate}}</span>
+                                                    <div class="apps clearfix top-mar-20"> <span ng-if="job.job_skill.length > 0" ng-repeat="skill in job.job_skill">
+                                                        <!--{{$first ? '' : $last ? ' and ' : ', '}}-->
+                                                        <a ui-sref="jobs({skills:skill.skill.id,q:'',page:'',job_categories:'',job_types:''})"> {{skill.skill.name | capitalize}}{{!$last?', ':''}}</a>
+                                                    </span> <span ng-if="job.job_skill.length  == 0">
+                                                        {{'--'| translate}}
+                                                    </span> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 col-sm-6">
+                                            <div class="row">
+                                                <div class="col-sm-4"> <span class="visible-xs">{{'No. of Opening:'| translate}}</span> <span class="content">{{job.no_of_opening}}</span> </div>
+                                                <!--<div class="col-sm-4"> <span class="visible-xs">{{'Last Date to Apply:'| translate}}</span> <span class="content">{{job.last_date_to_apply | date_format : 'MMM dd yyyy'}}</span> </div>-->
+                                                <div class="col-sm-8"> <span class="visible-xs">{{'Action'| translate}}:</span>
+                                                    <div class="action-blk text-right">
+                                                        <div ng-if="job.user_id != user.id"> 
+                                                            <span ng-show="job.is_show_salary">       
+                                                                                                       
+                                                                 <span>{{job.salary_from | customCurrency}} {{'to'|translate}}  {{job.salary_to| customCurrency}}</span>
+                                                                                                                    
+                                                        </span> <p>{{job.job_type.name}}</p> </div>
+                                                    
+                                                     <div class="apply-now">
+                                                        <a ui-sref="jobs_view({id:job.id})" ng-show="!job.is_apply && job.user_id != user.id" class="btn gradi-rnd-btn">
+                                                                    {{ 'Apply Now' | translate}}
+                                                            </a> <button type="button" ng-show="job.is_apply && job.user_id != user.id" class="btn gradi-rnd-btn disabled">{{'Applied'| translate}}</button>
+                                                        <div ng-if="job.user_id == user.id && isAuth">
+                                                            <a ui-sref="jobs_edit({id:job.id})" class="btn gradi-rnd-btn">
+                                                                    {{'Edit' | translate}}
+                                                            </a> 
+                                                        </div> 
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                     </div>
+                                </li>
+                                <li ng-if="jobs.length == 0" class="list-group-item project-content">
+                                    <p class="text-center text-danger no-mar">{{'No records available'| translate}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- project-contest: END -->
+            </div>
+            <!-- pagtion-Blk: START -->
+            <div class="row binding-pagination">
+                <div class="pagnation-content">
+                    <div class="container">
+                        <div class="clearfix pagnation-inner">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Jobs-Freelancer: END -->
+    <!-- pagtion-Blk: END -->
+    <!-- started today-Blk: START -->
+    <section class="bg-primary get-jobs-blk" ng-if="user.role_id != 4">
+        <div class="container">
+            <div class="ver-top-mspace30 ver-space10">
+                <div class="text-center">
+                    <h4 class="h3 no-mar text-uppercase Montserrat text-22"> <strong>{{'Get started today'|translate}}</strong> </h4>
+                    <p class="ver-mspace15 text-16 lin-heig22">{{settings.SITE_NAME}}  {{'is the perfect place for you to find the best freelancer/employee for your jobs' | translate}}. </p>
+                    <ul class="list-inline ver-mspace30 started-list">
+                        <!--<li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Contest/Contest') > -1"> <a href="contests" title="Join Contest" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Join Contest'| translate}}</a> </li>-->
+                        <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Job/Job') > -1"> <a href="jobs/add" title="Apply Now" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Post a Job'| translate}}</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- started today-Blk: START -->
+</main>

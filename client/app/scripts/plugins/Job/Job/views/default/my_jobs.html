@@ -1,0 +1,127 @@
+<div class="gray-bg-light">
+    <div class="container" ng-controller="MyJobsController">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- tab section -->
+                <div class="tabs-block my-jobs">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="projects">
+                            <div class="my-projects clearfix">
+                                <div class="col-md-5">
+                                    <h3 class="no-mar" ng-if="!form_value">{{'My Jobs'|translate}}</h3>
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="list-inline navbar-right" ng-if="!form_value">
+                                        <a href="" title="All">
+                                            <li ng-click="filterByStatus()"><span>{{'All' | translate}}</span> 
+                                            <span class="badge badge-yellow">{{all}}</span></a>
+                                        </li>
+                                        <a href="" title="All">
+                                            <li ng-repeat="jobStatus in status |  orderBy:'id'"> <span ng-click="filterByStatus(jobStatus.id)" ng-show="jobStatus.id == 1 && jobStatus.job_count > 0">{{'Draft' | translate}} <span class="badge badge-pink">{{jobStatus.job_count}}</span></span>
+                                        </a> <a href="" title="Payment Pending"><span ng-click="filterByStatus(jobStatus.id)" ng-show="jobStatus.id == 2 && jobStatus.job_count > 0">{{'Payment Pending' | translate}}  
+                                            <span class="badge badge-blue">{{jobStatus.job_count}}</span></span></a>                                        <a href="" title="Pending For Approval"><span ng-click="filterByStatus(jobStatus.id)" ng-show="jobStatus.id == 3 && jobStatus.job_count > 0">{{'Pending For Approval' | translate}}  <span class="badge badge-orange">{{jobStatus.job_count}}</span></span></a>                                        
+                                            <a href="" title="Open"><span ng-click="filterByStatus(jobStatus.id)" ng-show="jobStatus.id == 4">{{'Open' | translate}}  <span class="badge badge-pink">{{jobStatus.job_count}}</span></span></a> <a href="" title="Canceled"><span ng-click="filterByStatus(jobStatus.id)" ng-show="jobStatus.id == 5 && jobStatus.job_count > 0">{{'Cancelled' | translate}}  <span class="badge badge-green">{{jobStatus.job_count}}</span></span></a>                                        <a href="" title="Expired"><span ng-click="filterByStatus(jobStatus.id)" ng-show="jobStatus.id == 6 && jobStatus.job_count > 0">{{'Expired' | translate}}  <span class="badge badge-dark-blue">{{jobStatus.job_count}}</span></span> </a>                                        <a href="" title="Archived"><span ng-click="filterByStatus(jobStatus.id)" ng-show="jobStatus.id == 7">{{'Archived' | translate}}  <span class="badge badge-red">{{jobStatus.job_count}}</span></span></a> </li>
+                                        <li>
+                                            <a href="" ng-click="form()" title="jobs" class="btn btn-primary resume-applied"> <span class="show">{{buttonName}}</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div ng-if="form_value">
+                                <div ng-include="'scripts/plugins/Job/Job/views/default/job_applies_list.html'"></div>
+                            </div>
+                            <div class="table-block table-left-action" ng-if="!form_value">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-center table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'Select' | translate}}</th>
+                                                <th class="data-left"> <a ng-click="orderJob(sortby)"> {{'Job' | translate}} 
+                                            <i class="fa fa-angle-{{title}}" aria-hidden="true"></i>
+                                        
+                                            </a> </th>
+                                                <th class="data-left">{{'Company' | translate}}</th>
+                                                <th> <a ng-click="orderByNoOfOpening(sortby)">{{'No of Opening ' | translate}}
+                                                <i class="fa fa-angle-{{no_of_opening}}" aria-hidden="true"></i>
+                                            </a> </th>
+                                                <th> <a ng-click="orderByLastDateToApply(sortby)">{{'Experience' | translate}}
+                                                <i class="fa fa-angle-{{last_date_to_apply}}" aria-hidden="true"></i>
+                                            </a> </th>
+                                                <th class="data-left">{{'Job Applied Via' | translate}}</th>
+                                                <th> <a ng-click="orderJobApplyCount(sortby)">{{'No of Applies' | translate}}
+                                                <i  class="fa fa-angle-{{job_apply_count}}" aria-hidden="true"></i>
+                                            </a> / <a ng-click="orderJobApplyClickCount(sortby)"> {{'No of Job Apply Clicks' | translate}}
+                                                <i  class="fa fa-angle-{{job_apply_click_count}}" aria-hidden="true"></i>
+                                            </a> </th>
+                                                <th> <a ng-click="orderView(sortby)">{{'Views' | translate}}
+                                                <i  class="fa fa-angle-{{view_count}}" aria-hidden="true"></i>
+                                            </a> </th>
+                                                <th width="80"> <a ng-click="orderPosted(sortby)">{{'Posted' | translate}}
+                                                <i class="fa fa-angle-{{created_at}}" aria-hidden="true"></i>
+                                            </a> </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="myjob in myjobs">
+                                                <td>
+                                                    <div class="btn-group" uib-dropdown> <button id="single-button" type="button" class="btn btn-primary btn-sm" uib-dropdown-toggle ng-disabled="disabled">
+                                                            <i class="fa fa-cog" aria-hidden="true"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu cursor" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                                            <li role="menuitem">
+                                                                <a ui-sref="jobs_edit({id:myjob.id})"> <i class="fa fa-pencil fa-fw"> </i> {{'Edit' | translate}} </a>
+                                                            </li>
+                                                            <li role="menuitem">
+                                                                <a ui-sref="jobs_view({id:myjob.id})"> <i class="fa fa-eye fa-fw"> </i> {{'View' | translate}} </a>
+                                                            </li>
+                                                            <li role="menuitem" ng-show="myjob.job_status_id == 2">
+                                                                <a ui-sref="job_payment({id:myjob.id})"> <i class="fa fa-money fa-fw"> </i> {{'Pay Now' | translate}} </a>
+                                                            </li>
+                                                            <li role="menuitem" ng-show="myjob.job_status_id == 4">
+                                                                <a ng-click="archived(myjob.id)"> <i class="fa fa-check fa-fw"> </i>{{'Make as Archived' | translate}}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td class="data-left">
+                                                    <div class="job-status-block data-left">
+                                                        <h4 class="no-mar"> <a ng-if="myjob.job_status_id == 2" ui-sref="job_payment({id:myjob.id})"> {{myjob.title}} </a> <a ng-if="myjob.job_status_id != 2" ui-sref="jobs_view({id:myjob.id})"> {{myjob.title}} </a></h4>
+                                                        <div
+                                                            class="job-status no-mar  payment-pending"> <span class="report cursor" ng-show="myjob.is_featured"><i title="Featured" class="fa fa-star "> </i>   
+                                                            </span> <span class="report cursor" ng-show="myjob.is_urgent"><i title="Urgent" class="fa fa-asterisk">  </i>   
+                                                            </span>
+                                                            <ul class="list-inline">
+                                                                <li class="fa fa-square txt-gren cursor" aria-hidden="true" ng-show="myjob.job_status_id == 4"> {{'Published' | translate}} </li>
+                                                                <li class="fa fa-square txt-blue cursor" aria-hidden="true" ng-show="myjob.job_status_id == 1"> {{'Draft'|translate}} </li>
+                                                                <li class="fa fa-square txt-red cursor" aria-hidden="true" ng-show="myjob.job_status_id == 2"> {{'Payment Pending '|translate}} </li>
+                                                                <li class="fa fa-square txt-yellw cursor" aria-hidden="true" ng-show="myjob.job_status_id == 7"> {{'Archived '|translate}} </li>
+                                                                <li class="fa fa-square txt-orange cursor" aria-hidden="true" ng-show="myjob.job_status_id == 6"> {{'Expired '|translate}} </li>
+                                                            </ul>
+                                                    </div>
+                                </div>
+                                </td>
+                                <td class="data-left"><span title="{{myjob.company_name}}" class="">
+                                                            {{myjob.company_name}}</span></td>
+                                <td><span>{{myjob.no_of_opening}}</span></td>
+                                <td><span ng-if = "myjob.minimum_experience === 0 && myjob.maximum_experience === 0">0 {{'years'|translate}}</span>
+                                     <span ng-if = "myjob.minimum_experience > 0 || myjob.maximum_experience > 0">{{myjob.minimum_experience}} - {{myjob.maximum_experience}} {{'years'|translate}}</span></td>
+                                <td class="data-left" ng-show="myjob.apply_via==='via_our_site'"><span>{{settings.SITE_NAME}}</span></td>
+                                <td ng-show="myjob.apply_via==='via_company'"><span>{{'Company'|translate}}</span></td>
+                                <td> <span ui-sref="applies_jobs({job_id:myjob.id})">{{myjob.job_apply_count}} / {{myjob.job_apply_click_count}}</span> </td>
+                                <td><span>{{myjob.view_count}}</span></td>
+                                <td><span>{{ myjob.created_at  | date_format : DateFormat.view }}</span></td>
+                                </tr>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="myjobs.length == 0 && !form_value" class="list-group-item project-content">
+                <p class="hor-space text-center">{{'No records available'| translate}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,125 @@
+<div class="section jobs-view" ng-controller="jobsViewController" ng-show='show_response_page'>
+    <div class="container">
+        <div class="clearfix">
+            <h3 class="big-mspace text-22 line-height-32">{{job_view.title | capitalize}}</h3>
+            <!--<span ng-if="job_view.is_featured" class="label label-info label-orage Featured tilt-feature"> {{'Featured'|translate}}</span>
+            <span ng-if="job_view.is_urgent" class="label label-info label-red Urgent  tilt-badge tilt-urgent"> {{'Urgent'|translate}}</span>-->
+            <div class="job-body job-view">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="urgent-featured">
+                            <span ng-if="job_view.is_featured" class="label label-info label-orage Featured tilt-feature tilt"> {{'Featured'|translate}}</span>
+                            <span ng-if="job_view.is_urgent" class="label label-info label-red Urgent tilt-badge tilt-private tilt"> {{'Urgent'|translate}}</span>
+                        </div>
+                    </div>
+                   
+                    <div class="col-xs-6 col-sm-4 col-md-3 ">
+                        <img ng-src="{{job_view.logo_url}}" class="img-responsive img-thumbnail">
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-5">
+                        <!--<div class="jobs-report-share">
+                            <span class="report cursor" ng-if="job_view.user_id != user.id && isAuth && job_view.is_featured"> 
+                                <i title="Featured" class="fa fa-star hor-smspace"> </i>   
+                            </span>
+                            <span class="report cursor" ng-if="job_view.user_id != user.id && isAuth && job_view.is_urgent"> 
+                                <i title="Urgent" class="fa fa-asterisk">  </i>   
+                            </span>
+                        </div>-->
+                        <div class="job-info navbar-btn">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <p class="row">
+                                        <span class="col-sm-3">{{'Job Type'|translate}}</span>
+                                        <span class="col-sm-9"> {{job_view.job_type.name}} </span>
+                                    </p>
+                                </li>
+                                <li class="row">
+                                    <p class="clearfix">
+                                        <span class="col-sm-3">{{'Skills'|translate}} </span>
+                                        <span class="list-inline col-sm-9">
+                                            <span class="" ng-repeat=" skills in job_view.job_skill"> 
+                                                <!--{{$first ? '' : $last ? ' and ' : ', '}} -->
+                                                <span class="cursor text-info" ng-click="jobFilter(skills.skill_id, 1)"> {{skills.skill.name | capitalize}}{{!$last?', ':''}} </span>
+                                        </span>
+                                        </span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="row">
+                                        <span class="col-sm-3">{{'Category'|translate}} </span>
+                                        <span class="cursor col-sm-9" ng-click="jobFilter(job_view.job_category_id, 2)"><span class="text-info"> {{job_view.job_category.name}}</span></span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="row">
+                                        <span class="col-sm-3">{{'Location'|translate}} </span>
+                                        <span class="col-sm-9"> 
+                                            <span class="flag-icon flag-icon-{{job_view.country.iso_alpha2 | lowercase}}"></span>                                        {{job_view.full_address}}
+                                        </span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="row">
+                                        <span class="col-sm-3">{{'Experience'|translate}}</span>
+                                        <span class="col-sm-9" ng-if = "job_view.minimum_experience === 0 && job_view.maximum_experience === 0"> 0 {{'years'|translate}}</span>
+                                    <span class="col-sm-9" ng-if = "job_view.minimum_experience > 0 || job_view.maximum_experience > 0"> {{job_view.minimum_experience}} - {{job_view.maximum_experience}} {{'years'|translate}} </span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="row">
+                                        <span class="col-sm-3">{{'Openings'|translate}} </span>
+                                        <span class="col-sm-9"> {{job_view.no_of_opening}} </span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 col-xs-12 well text-center">
+                        <div class="jobs-apply" ng-if="job_view.user_id != user.id">
+                            <div class="salary_info navbar-btn" ng-if="job_view.is_show_salary">
+                                <h5 class="text-18"> {{'Salary: '|translate}}
+                                <span class="salary text-b text-16">
+                                    <span>
+                                 <amount-display  amount='{{job_view.salary_from}}' ng-if="job_view.salary_from"></amount-display>
+                                        {{'to'|translate}} 
+                                         <amount-display  amount='{{job_view.salary_to}}' ng-if="job_view.salary_to"></amount-display>
+                                        </span>
+                                </span>
+                                </h5>
+                                <p class="salary_type text-muted"> {{job_view.salary_type.name}} </p>
+                            </div>
+                            <span ng-if="job_view.apply_via==='via_our_site' && isAuth">
+                                <button class="btn btn-primary btn-lg" ui-sref="applies_resume({id:job_view.id , slug:job_view.slug})" ng-click="jobApply(job_view.id , job_view.slug)"  ng-if="!is_job_apply"> {{'Apply Now' | translate}}</button> 
+                                <button class="btn btn-primary" ng-disabled="true" ng-if="is_job_apply"> {{'Applied' | translate}}</button> 
+                            </span>
+                            <span ng-if="job_view.apply_via==='via_company' && isAuth">
+                                <a class="btn btn-primary" ng-href="{{url.job.job_url}}" ng-click="jobApplyClick(job_view.id)" target="_blank"> {{'Apply Now' | translate}}</a> 
+                            </span>
+                            <span>
+                                <a class="btn btn-primary btn-lg" ng-if="!isAuth" ng-click="openLoginModal('login')"> {{'Apply Now' | translate}}</a> 
+                            </span>
+                        </div>
+                         <ul class="list-inline">
+                         <li><job_view_flag></job_view_flag></li>
+                         <li><job_view_share> </job_view_share></li>
+                         </ul>
+                        <div class="jobs-apply no-pad" ng-if="job_view.user_id == user.id">
+                            <a ui-sref="jobs_edit({id:job_view.id})" class="btn btn-primary">{{'Edit' | translate}}</a>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <h5 class="text-22"> {{job_view.company_name}} </h5>
+                        <strong><a href="{{job_view.company_website}}" target="_blank">{{job_view.company_website}}</a></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+            <h3 class="panel-title text-22 big-mspace">{{'Description' | translate}}</h3>
+            <div class="clearfix">
+                <p ng-bind-html="job_view.description | trustedhtml"></p>
+            </div>
+        </div>
+    </div>
+</div>

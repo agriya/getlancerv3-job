@@ -1,0 +1,146 @@
+<div class="row my-contests" ng-controller="MyJobsDashboardController">
+    <!-- tab section -->
+    <!--<div class="big-mspace">
+        <h3 class="no-mar" ng-if="!form_value && !status_name">{{'My Jobs'|translate}} - {{'All'|translate}}</h3>
+        <h3 class="no-mar" ng-if="!form_value && status_name"> {{'My Jobs'|translate}} - {{status_name}}</h3>
+    </div>-->
+    <div class="big-mspace text-center top-mspace">
+        <ul class="list-inline dashboard-list text-center project-lists" ng-if="!form_value">
+            <li ng-click="filterByStatus(null)" ng-class="{active:job_stats == null}" data-class="job_stats">
+                <a href="" title="All">
+                    <span class="badge badge-blue">{{all}}</span>
+                    <p class="no-mar">{{'All' | translate}}</p>
+                </a>
+            </li>
+                <li ng-click= "filterByStatus(1, 'Draft')" title="Draft" ng-class="{active:job_stats == 1}" data-class="tabType">
+                    <span class="badge badge-red">{{my_job_status[0].job_count}}</span>
+                    <p class="no-mar">{{'Draft'|translate}}</p>
+                </li>
+                <li ng-click= "filterByStatus(2, 'Payment Pending')" title="Payment Pending" ng-class="{active:job_stats == 2}" data-class="tabType">
+                         <span class="badge badge-yellow">{{my_job_status[1].job_count}}</span>
+                    <p class="no-mar">{{'Payment Pending'|translate}}</p>
+                </li>
+
+                 <li ng-click= "filterByStatus(4, 'Open')" title="Open" ng-class="{active:job_stats == 4}" data-class="tabType">
+                         <span class="badge badge-green">{{my_job_status[3].job_count}}</span>
+                    <p class="no-mar">{{'Open'|translate}}</p>
+                </li>
+                
+                 <li ng-click= "filterByStatus(3, 'waiting for approval ')" title="waiting for approval " ng-class="{active:job_stats == 3}" data-class="tabType" ng-if='settings.IS_NEED_ADMIN_APPROVAL_FOR_NEW_JOBS != 0'>
+                         <span class="badge badge-brown">{{my_job_status[2].job_count}}</span>
+                    <p class="no-mar">{{'Waiting for Approval'|translate}}</p>
+                </li>
+                <li ng-click= "filterByStatus(5, 'Inactive by Employer')" title="Inactive by Employer" ng-class="{active:job_stats == 5}" data-class="tabType" ng-if = 'my_job_status[4].job_count > 0'>
+                         <span class="badge badge-pink">{{my_job_status[4].job_count}}</span>
+                    <p class="no-mar">{{'Inactive by Employer'|translate}}</p>
+                </li>
+                 <li ng-click= "filterByStatus(6, 'Expired')" title="Expired" ng-class="{active:job_stats == 6}" data-class="tabType">
+                         <span class="badge badge-dark-blue">{{my_job_status[5].job_count}}</span>
+                    <p class="no-mar">{{'Expired'|translate}}</p>
+                </li>
+                 <li ng-click= "filterByStatus(7, 'Archived')" title="Archived" ng-class="{active:job_stats == 7}" data-class="tabType">
+                         <span class="badge badge-teal">{{my_job_status[6].job_count}}</span>
+                    <p class="no-mar">{{'Archived'|translate}}</p>
+                </li>
+                 <li ng-click= "filterByStatus(8, 'Canceled By Admin')" title="Canceled By Admin" ng-class="{active:job_stats == 8}" data-class="tabType" ng-if = 'my_job_status[7].job_count > 0'>
+                         <span class="badge badge-aqua">{{my_job_status[7].job_count}}</span>
+                    <p class="no-mar">{{'Canceled By Admin'|translate}}</p>
+                </li>
+
+        </ul>
+    </div>
+    <div class="col-xs-12">
+        <!--<div class="table-block">-->
+        <!--<div class="col-md-2">
+                    <a href="" ng-click="form()" title="jobs" class="btn btn-primary resume-applied"> <span class="show">{{buttonName}}</span></a>
+            </div>-->
+        <!--<div>
+                <div ng-include="'scripts/plugins/Job/Job/views/default/job_applies_list.html'"></div>
+            </div>-->
+        <div class="table-block table-left-action">
+            <div class="table-responsive">
+                <table class="table table-striped table-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="75">{{'Select' | translate}}</th>
+                            <th class="data-left">
+                                <a ng-click="orderJob(sortby)"> <span class="blackc"> {{'Job' | translate}} </span> <i class="fa fa-angle-{{title}}" aria-hidden="true"></i> </a>
+                            </th>
+                            <th class="data-left">{{'Company' | translate}}</th>
+                            <th width="150">
+                                <a ng-click="orderByNoOfOpening(sortby)"> <span class="blackc">{{'No of Opening ' | translate}}</span> <i class="fa fa-angle-{{no_of_opening}}" aria-hidden="true"></i> </a>
+                            </th>
+                            <th width="150"> <a ng-click="orderByLastDateToApply(sortby)"><span class="blackc">{{'Experience' | translate}}</span>
+                                <i class="fa fa-angle-{{last_date_to_apply}}" aria-hidden="true"></i>
+                            </a> </th>
+                            <th class="data-left" width="150">{{'Job Applied Via' | translate}}</th>
+                            <th> <a ng-click="orderJobApplyCount(sortby)"><span class="blackc">{{'No of Applicants' | translate}}</span>
+                                <i  class="fa fa-angle-{{job_apply_count}}" aria-hidden="true"></i>
+                            </a> /
+                                <a ng-click="orderJobApplyClickCount(sortby)"> <span class="blackc">{{'No of Job Click count' | translate}}</span> <i class="fa fa-angle-{{job_apply_click_count}}" aria-hidden="true"></i> </a>
+                            </th>
+                            <th> <a ng-click="orderView(sortby)"><span class="blackc">{{'Views' | translate}}</span>
+                                <i  class="fa fa-angle-{{view_count}}" aria-hidden="true"></i>
+                            </a> </th>
+                            <th width="80"> <a ng-click="orderPosted(sortby)"><span class="blackc">{{'Posted' | translate}}</span>
+                                <i class="fa fa-angle-{{created_at}}" aria-hidden="true"></i>
+                            </a> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="myjob in myjobs">
+                            <td>
+                                <div class="btn-group" uib-dropdown> <button id="single-button" type="button" class="btn btn-primary btn-sm" uib-dropdown-toggle ng-disabled="disabled">
+                                            <i class="fa fa-cog" aria-hidden="true"></i>
+                                        </button>
+                                    <ul class="dropdown-menu cursor" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                        <li role="menuitem">
+                                            <a ui-sref="jobs_edit({id:myjob.id})"> <i class="fa fa-pencil"> </i> {{'Edit' | translate}} </a>
+                                        </li>
+                                        <li role="menuitem">
+                                            <a ui-sref="jobs_view({id:myjob.id})"> <i class="fa fa-eye"> </i> {{'View' | translate}} </a>
+                                        </li>
+                                        <li role="menuitem" ng-show="myjob.job_status_id == 2">
+                                            <a ui-sref="job_payment({id:myjob.id})"> <i class="fa fa-money"> </i> {{'Pay Now' | translate}} </a>
+                                        </li>
+                                        <li role="menuitem" ng-show="myjob.job_status_id == 4">
+                                            <a ng-click="archived(myjob.id)"> <i class="fa fa-check"> </i>{{'Make as Archived' | translate}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td class="data-left"> <a ng-if="myjob.job_status_id == 2" ui-sref="job_payment({id:myjob.id})">  {{myjob.title}}</a> <a ng-if="myjob.job_status_id != 2" ui-sref="jobs_view({id:myjob.id})"> {{myjob.title}}</a> 
+                            <div class="job-status no-mar payment-pending">
+                                            <span  ng-show="myjob.is_featured" class="label label-info label-orage Featured">{{'Featured'|translate}}</span>
+                                <span ng-show="myjob.is_urgent" class="label label-info label-blue Urgent">{{'Urgent'|translate}}</span>
+                                        </div>
+                            </td>
+                            <td class="data-left"><span title="{{myjob.company_name}}" class="">
+                                {{myjob.company_name}}</span></td>
+                            <td><span>{{myjob.no_of_opening}}</span></td>
+                             <td> <span ng-if = "myjob.minimum_experience === 0 && myjob.maximum_experience === 0">0 {{'years'|translate}}</span>
+                                     <span ng-if = "myjob.minimum_experience > 0 || myjob.maximum_experience > 0">{{myjob.minimum_experience}} - {{myjob.maximum_experience}} {{'years'|translate}}</span></td>
+                            <td class="data-left" ng-show="myjob.apply_via==='via_our_site'"><span>{{settings.SITE_NAME}}</span></td>
+                            <td ng-show="myjob.apply_via==='via_company'"><span>{{'Company'|translate}}</span></td>
+                            <td> <span ui-sref="applies_jobs({job_id:myjob.id})">{{myjob.job_apply_count}} / {{myjob.job_apply_click_count}}</span> </td>
+                            <td><span>{{myjob.view_count}}</span></td>
+                            <td><span>{{ myjob.created_at  | date_format : DateFormat.view }}</span></td>
+                        </tr>
+                        <tr ng-if="!myjobs.length  && !loader" class="text-center text-danger top-mspace">
+                            <td colspan="9"> <span> {{'No records available' | translate}}</span> </td>
+                        </tr>
+                        <tr ng-if="!myjobs.length  && loader" class="text-center">
+                            <td colspan="9">
+                                <span>
+                                    <img ng-src="images/contest_loader.gif" alt="loading " title="loading">
+                                </span>
+                            </td>
+                        </tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--</div>-->
+    </div>
+</div>

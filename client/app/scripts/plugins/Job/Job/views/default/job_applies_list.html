@@ -1,0 +1,75 @@
+<div class="tabs-block gray-bg-light">
+    <div class="container" ng-controller="JobAppliesListController">
+        <div class="row">
+            <!-- tab section -->
+            <div class="col-md-4">
+                <h3 class="no-mar">Applied Resumes</h3>
+            </div>
+            <div class="col-md-8">
+                <ul class="list-inline dashboard-list text-right"> <span ng-click="filterByStatus()">All <span class="badge badge-yellow">{{all}}</span></span>
+                    <li ng-repeat="status in jobStatsCount |  orderBy:'id'"> <span ng-click="filterByStatus(status.id)" ng-show="status.id == 1">New <span class="badge badge-blue">{{status.job_apply_count}}</span></span> <span ng-click="filterByStatus(status.id)" ng-show="status.id == 2">Inprocess <span class="badge badge-pink">{{status.job_apply_count}}</span></span>
+                        <span ng-click="filterByStatus(status.id)" ng-show="status.id == 3">Selected <span class="badge badge-orange">{{status.job_apply_count}}</span></span> <span ng-click="filterByStatus(status.id)" ng-show="status.id == 4">Rejected <span class="badge badge-green">{{status.job_apply_count}}</span></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-12">
+                <div class="table-block">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th> {{'Status' | translate}} </th>
+                                    <th> {{'Job' | translate}} </i>
+                                    </th>
+                                    <th class="cursor"> {{'Applicant' | translate}} </th>
+                                    <th> <a ng-click="orderByRatings(sortby)" class="blackc">{{'Ratings' | translate}}
+                                    <i  class="fa fa-angle-{{total_resume_rating}}" aria-hidden="true"></i>
+                                </a> </th>
+                                    <th> <a ng-click="orderByFeedbacks(sortby)" class="blackc">{{'Feedbacks' | translate}}
+                                    <i  class="fa fa-angle-{{resume_rating_count}}" aria-hidden="true"></i>
+                                </a> </th>
+                                    <th> <a ng-click="orderByAppliedOn(sortby)" class="blackc">{{'Applied On' | translate}}
+                                    <i class="fa fa-angle-{{created_at}}" aria-hidden="true"></i>
+                                </a> </th>
+                                    <th width="100">{{'Action' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="appliesjob in appliesjobs">
+                                    <td>
+                                        <div class="col-sm-8"> <select name="flagCategory" ng-change="jobStatusApply(appliesjob.job_apply_status_id, appliesjob.id)" ng-model="appliesjob.job_apply_status_id" class="form-control cursor" ng-required="true" ng-options="ApplyStatus.id as ApplyStatus.name for ApplyStatus in jobStatsCount | orderBy:'id'">
+                                                    <option value="{{ApplyStatus.id}}">{{'Please Select'|translate}}</option>
+                                                </select> </div>
+                                    </td>
+                                    <td> <span class="c"> 
+                                            <a ui-sref="jobs_view({id: appliesjob.job.id})" >
+                                                {{appliesjob.job.title | capitalize}}
+                                            </a>
+                                        </span> </td>
+                                    <td><a href="users/{{appliesjob.user.id}}/{{appliesjob.user.username}}"><span class="c">{{appliesjob.user.username}}</span></a></td>
+                                    <td> <span class="c star-rating" ng-if="parseInt(appliesjob.resume_rating_count) > 0">
+                                            <input-stars ng-model="value" ng-init="value=appliesjob.total_resume_rating / appliesjob.resume_rating_count" max="{{StarCount.JobsResume}}" readonly="true"></input-stars>
+                                        </span> <span class="c" ng-if="parseInt(appliesjob.resume_rating_count) == 0"> 
+                                            -
+                                        </span> </td>
+                                    <td> <span class="c">{{appliesjob.resume_rating_count| number:1}}</span> </td>
+                                    <td><span class="c">{{ appliesjob.created_at  | date_format : DateFormat.view }}</span></td>
+                                    <td>
+                                        <!--<a target="_blank" class="cursor" ng-click="downloadResume(appliesjob.attachment)" download="file_name"> <i class="fa fa-download"> </i> </a>-->
+                                        <span download-file attachment="{{appliesjob.attachment}}" downloadlable="<i class='fa fa-download'> </i>"></span>
+                                        <a ui-sref="applies_jobs_view({id:appliesjob.id})" class="cursor" title="view"> <i class="fa fa-eye fa-fw"> </i> </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div ng-if="appliesjobs.length == 0" class="list-group-item project-content">
+                    <p class="text-danger text-center">{{'No records available'| translate}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

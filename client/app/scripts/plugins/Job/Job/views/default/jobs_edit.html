@@ -1,0 +1,315 @@
+<section class="proj-details" ng-controller="JobsEditController">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="no-mar text-30 bot-mspace">{{'Edit Job'|translate}} - {{job.title}}</h1>
+                <form class="proj-form" role="form" name="jobAdd" novalidate>
+                    <div>
+                        <h2>{{'Job Info'|translate}}</h2>
+                      	
+                        <div class="form-group"> <label>{{'Job Title'|translate}}</label> <input type="text" ng-model="job.title" class="form-control" id="inputJobTitle" name="inputJobTitle" ng-required="true"> <span class="error" ng-show="(jobAdd.$submitted || jobAdd.inputJobTitle.$touched) && (jobAdd.inputJobTitle.$pristine || jobAdd.inputJobTitle.$invalid) && (jobAdd.inputJobTitle.$error.required)">{{'Required'| translate}} </span>                                                  </div>
+                        <div class="form-group jobs-desc"><label>{{'Describe about Your Job'|translate}}</label>
+                            <!--<textarea ng-model="job.description" name="description"
+                                ng-required="true" ng-minlength="250" rows="6" cols="88" id="jobdescription" type="text" class="    form-control"> </textarea>                        -->
+                            <text-angular ng-model="job.description" name="description" id="jobdescription" ng-required="true" placeholder="Describe about Your Job Here..."  ta-toolbar="[['p','pre','quote','underline','strikeThrough'],['bold','italics','ul','ol','clear'],['redo','undo','indent','outdent','html'],['justifyLeft','justifyCenter','justifyRight','justifyFull']]"></text-angular> <span class="error" ng-show="(jobAdd.$submitted || jobAdd.description.$touched) && (jobAdd.description.$pristine || jobAdd.description.$invalid) && (jobAdd.description.$error.required)">
+                                        {{'Required'| translate }}                                    
+                                        </span> <span class="error" ng-show="(jobAdd.$submitted || jobAdd.description.$touched) && (jobAdd.description.$pristine || jobAdd.description.$invalid) && (jobAdd.description.$error.minlength)">
+                                        {{'Minimum length is 250'| translate }} 
+                                        </span> </div> <h2>{{'Skills'|translate}}</h2>
+                                         <tags-input name="skill_select" ng-model="job.skill_select" placeholder="Skills"  
+                        on-tag-added="tagAdded($tag)" on-tag-removed="tagRemoved($tag)" replace-spaces-with-dashes="false" ng-required="true" add-on-enter="true">
+                        <auto-complete min-length="1" debounce-delay="0" source="loadSkills($query)"></auto-complete>
+           </tags-input>
+           <span class="error" ng-show="(jobAdd.$submitted || jobAdd.skill_select.$touched) && (jobAdd.skill_select.$pristine || jobAdd.skill_select.$invalid) && (jobAdd.skill_select.$error.required)"> {{'Required'| translate }} </span>
+                        <div class="form-group top-mspace"> <label class="show rad">{{'Job Type'|translate}} </label>
+                            <div class="radio-inline" ng-repeat="type in types"> <label class="rad">
+                <input type="radio" name="job_type_id" id="jobtype_{{type.id}}" value="{{type.id}}" ng-click="selectType(type.id)" ng-checked="$index == job.job_type_id -1?true:''"> {{type.name}} 
+                  <span></span>
+              </label> </div>
+                        </div>
+                        <div class="form-group inline-frm"> 
+                            <div class="row">
+                                <label class="col-xs-12">{{'Job Category'|translate}}</label> 
+                                <div class="col-sm-9">
+                                    <div class="frm-select">
+                                        <select class="form-control" id="inputCategory" name="category_id" ng-model="job.job_category_id" class="form-control" ng-required="true" ng-options="category.id as category.name for category in categories | orderBy:'name'">
+                                        <option value="{{categorie.id}}">{{'Please Select'|translate}}</option>
+                                        <option value="{{categorie.id}}" ng-repeat="categorie in categories | orderBy:'name'">{{categorie.name}}</option>
+                                        <span class="error" ng-show="(jobAdd.$submitted || jobAdd.category_id.$touched) && (jobAdd.category_id.$error.required)">{{'Required'| translate }} </span>
+                                        </select> 
+                                        <span class="error" ng-show="(jobAdd.$submitted || jobAdd.category_id.$touched) && (jobAdd.category_id.$error.required)">{{'Required'| translate }} </span>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                    <div>
+                        <h2>{{'Job Location'|translate}}</h2>
+                        <div class="form-group">
+                            <label>{{'Address'|translate}}</label> 
+                            <input type="text" g-places-autocomplete ng-model="place" autocomplete="off" class="form-control" id="inputLocation" ng-change="location()" name="location" placeholder="" ng-required="true">                            <span class="error" ng-show="(jobAdd.$submitted || jobAdd.location.$touched) && (jobAdd.location.$pristine || jobAdd.location.$invalid) && (jobAdd.location.$error.required)">
+                               {{'Required'| translate }} 
+                            </span> 
+                        </div>
+                        <div class="form-group" ng-show="disable_zip == 'false'"> <label>{{'Zip Code'|translate}}</label> <input type="text" name="zip_code" ng-model="job.zip_code" class="form-control" id="inputZip3" placeholder="{{'Zip Code'|translate}}"> </div>
+                    </div>
+                    <div>
+                        <h2>{{'Salary'|translate}}</h2>
+                        <div class="form-group inline-frm">
+                            <div class="row">
+                                <div class="col-sm-3"> <label>{{'From'|translate}}</label>
+                                    <div class="frm-select"> <input type="number" ng-model="job.salary_from" name="salaryform" class="form-control" id="salary-from" ng-required="true" min='1' number-only> <span class="error" ng-show="(jobAdd.$submitted || jobAdd.salaryform.$touched) && (jobAdd.salaryform.$pristine || jobAdd.salaryform.$invalid) && (jobAdd.salaryform.$error.required)"> {{'Required'| translate }}</span>                                        <span class="error" ng-show="jobAdd.salary_to.$error.min && !jobAdd.salary_to.$error.required">{{'Enter the Valid Amount'|translate}}</span> </div>
+                                </div>
+                                <div class="col-sm-3"> <label>{{'To'|translate}}</label>
+                                    <div class="frm-select"> <input type="number" ng-model="job.salary_to" name="salaryto" class="form-control" id="salary-to" ng-required="true" min='1' number-only> <span class="error" ng-show="(jobAdd.$submitted || jobAdd.salaryto.$touched) && (jobAdd.salaryto.$pristine || jobAdd.salaryto.$invalid) && (jobAdd.salaryto.$error.required)">{{'Required'| translate }}</span>                                        <span class="error" ng-show="job.salary_from > job.salary_to">{{'To salary greater than from salary'| translate }}</span> <span class="error" ng-show="jobAdd.salary_to.$error.min && !jobAdd.salary_to.$error.required">{{'Enter the Valid Amount'|translate}}</span>                                        </div>
+                                </div>
+                                <div class="col-sm-6"> <label>{{'Salary Type'|translate}}</label>
+                                    <div class="frm-select">
+                                        
+                                         <select ng-options="salarytype.id as salarytype.name for salarytype in salarytypes" name="salary_type" id="slaryType" ng-model="job.salary_type_id" class="form-control" ng-required="true">
+                    <option value="{{salarytype.id}}">{{'Please Select'|translate}}</option>
+                    <option value="{{salarytype.id}}" ng-repeat="salarytype in salarytypes">{{salarytype.name}} </option>
+                    <span class="error" ng-show="(jobAdd.$submitted || jobAdd.salary_type.$touched) && (jobAdd.salary_type.$pristine || jobAdd.salary_type.$invalid) && (jobAdd.salary_type.$error.required)">{{'Required'| translate }}  </span>
+                    </select> <span class="error" ng-show="(jobAdd.$submitted || jobAdd.salary_type.$touched) && (jobAdd.salary_type.$pristine || jobAdd.salary_type.$invalid) && (jobAdd.salary_type.$error.required)">{{'Required'| translate }}  </span>                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix label-frm">
+                            <div class="checkbox">
+                                <label for="salary">
+                                    <input type="checkbox" id="salary" ng-model="job.is_show_salary">
+                                    <span class="show-sal"></span>
+                                    {{'Show salary on job page'|translate}}?
+                                </label> 
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>{{'Others'|translate}}</h2>
+                                <div>
+                        <h3>{{'Experience'|translate}}</h3>
+                        <div class="form-group inline-frm">
+                            <div class="row">
+                                <div class="col-sm-3"> <label>{{'From'|translate}}</label> 
+                                <div class="frm-select">
+                                <select ng-options="exp_year as exp_year for exp_year in exp_years" name="salary_type" id="slaryType" ng-model="job.minimum_experience" class="form-control" ng-required="true">
+                                        <option value="">{{"Minimum Years"|translate}}</option>
+                                    <option ng-value="{{job.minimum_experience}}" ng-repeat="exp_year in exp_years">{{exp_year}}</option>
+                                    </select>
+                          <span class="error" ng-show="(jobAdd.$submitted || jobAdd.exp_form.$touched) && (jobAdd.exp_form.$error.required)">{{'Required'| translate }} </span>   
+                                </div>
+                                    
+                                </div>
+                               <div class="col-sm-3"> 
+                                   <label>{{'To'|translate}}</label>
+                                    <div class="frm-select">
+                                    <select ng-options="exp_year as exp_year for exp_year in exp_years" name="salary_type" id="slaryType" ng-model="job.maximum_experience" class="form-control" ng-required="true">
+                                    <option value="">{{"Maximum Years"|translate}}</option>
+                                    <option ng-value="{{job.maximum_experience}}" ng-repeat="exp_year in exp_years">{{exp_year}}</option>
+                                    </select>
+                                    <span class="error" ng-show="job.minimum_experience > job.maximum_experience">{{'To Experience greater than  from experience'| translate }}</span>
+                          <span class="error" ng-show="(jobAdd.$submitted || jobAdd.exp_to.$touched) && (jobAdd.exp_to.$error.required)">{{'Required'| translate }} </span>  
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                         </div>
+                        <div class="form-group"> 
+                            <div class="row">
+                                <label class="col-xs-12">{{'No of Openings'|translate}}</label> 
+                                <div class="col-sm-9">
+                                    <input type="number" name="opening" min="1" ng-model="job.no_of_opening" class="form-control" id="latitude" ng-required="true" number-only>    
+                                    <span class="error" ng-show="(jobAdd.$submitted || jobAdd.opening.$touched) && (jobAdd.opening.$pristine || jobAdd.opening.$invalid) && (jobAdd.opening.$error.required)">{{'Required'| translate}} </span>                            
+                                    <span class="error" ng-show="jobAdd.opening.$error.min && !jobAdd.opening.$error.required">{{'Enter the Valid Amount'|translate}}</span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>{{'Company Information'|translate}}</h2>
+                        <div class="form-group"> 
+                            <div class="row">
+                                <label class="col-xs-12">{{'Company Name'|translate}}</label> 
+                                <div class="col-sm-9">
+                                    <input type="text" ng-model="job.company_name" name="companyName" class="form-control" id="inputJobTitle" ng-required="true"> 
+                                    <span class="error" ng-show="(jobAdd.$submitted || jobAdd.companyName.$touched) && (jobAdd.companyName.$pristine || jobAdd.companyName.$invalid) && (jobAdd.companyName.$error.required)">{{'Required'| translate }} </span>  
+                                </div>     
+                            </div>                     
+                        </div>
+                        <div class="form-group"> 
+                            <div class="row">
+                                <label class="col-xs-12">{{'Website'|translate}}</label> 
+                                <div class="col-sm-9">
+                                    <input type="url" ng-model="job.company_website" name="Website" class="form-control" id="inputJobTitle" placeholder="{{ 'http://'|translate}}  "> 
+                                    <span class="error" ng-show="(jobAdd.$submitted || jobAdd.Website.$touched) && (jobAdd.Website.$pristine || jobAdd.Website.$invalid) && (jobAdd.Website.$error.url)">{{'Enter a valid url'| translate }} </span> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-5"> <label class="fileinput-button btn-block">
+                       <input type="file" ngf-select ng-model="file" name="file" ng-change="upload(file)" class="underline text-red" accept="image/*"> 
+                         <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                          {{'Upload File'|translate}}
+                    </label>
+                     <div ng-if='$root.settings.ALLOWED_EXTENSIONS_OF_JOB_IMAGE'>
+                     <span class="grayc help-block"><small>{{'Allowed extensions:'|translate}} {{settings.ALLOWED_EXTENSIONS_OF_JOB_IMAGE}}</small></span>
+                    <span class="error bot-space" ng-if="error_message && error_message !== ''">
+                                            {{error_message}}</span> 
+                     </div>
+                                            <div class="clearfix" ng-show="!file"> <img ng-src="{{job.logo_url}}" title="Logo Url" /> </div>
+                                            <div ng-show="file"> <img ngf-src="file" alt="[Image: Group]" title="Group" class="img-responsive center-block"> </div>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <p> {{'Drag and Drop Any Image That Might Be Helpful in Explaining Your Job or Your Company Brief Here'|translate}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>{{'Applicants Should Apply Via'|translate}}</h2>
+                        <div class="form-group">
+                            <div class="radio-inline"> <label class="rad">
+                                 <input type="radio" ng-model="job.apply_via" name="apply" value="via_our_site" id="apply1" ng-checked="true"> {{settings.SITE_NAME}}
+                                 <span></span>
+                                 </label> <br/>
+                                <p>Application, Resumes &amp; relevant links will be collected for each candidate. Applications will be stored and always accessible in our site even after the post expires. </p> <label class="rad">
+                                    <input type="radio" name="apply" ng-model="job.apply_via" value="via_company" id="apply2">{{'Via
+                                    Company'|translate}}
+                                    <span></span>
+                                    </label>
+                                <p>{{'Provide a URL where candidates can apply for your position'|translate}}.</p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="job.apply_via == 'via_company'"> <label>{{'Job URL'|translate}}</label> <input type="url" name="job_url" ng-model="job.job_url" class="form-control" id="job_url" placeholder="{{'http'|translate}}://" ng-required="job.apply_via == 'via_company'"> <span class="error"
+                                ng-show="(jobAdd.$submitted || jobAdd.job_url.$touched) && (jobAdd.job_url.$pristine || jobAdd.job_url.$invalid) && (jobAdd.job_url.$error.required)">
+                     {{'Required'| translate }} </span> <span class="error" ng-show="(jobAdd.$submitted || jobAdd.job_url.$touched) && (jobAdd.job_url.$pristine || jobAdd.job_url.$invalid) && (jobAdd.job_url.$error.url)">
+                                                {{'Enter a valid url'| translate }}  
+                                            </span> </div>
+                    </div>
+                    <div class="form-group option-blk" ng-show="(job.job_status_id == 2)||(job.job_status_id == 1)">
+                        <div class="panel">
+                             <h4 class="hor-space alert alert-info text-left blackc">{{'Listing fee'| translate}}: <span ng-if="settings.LISTING_FEE_FOR_JOB == 0">
+                    {{'Free'|translate}}
+                                  </span> <span ng-if="settings.LISTING_FEE_FOR_JOB > 0">
+
+ <amount-display  amount='{{settings.LISTING_FEE_FOR_JOB}}' ng-if="settings.LISTING_FEE_FOR_JOB"></amount-display>
+                                  </span></h4>
+                            <h3>{{'Get the most from Jobs'|translate}}! (optional)</h3>
+                           
+                            <ul class="list-unstyled">
+                                <li>
+                                    <div class="option-innr">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="pull-left">
+                                                    <div class="form-group">
+                                                        <div class="checkbox"> <label for="is_featured">
+                                     <input type="checkbox" ng-model="job.is_featured" ng-click="projectFeatureFeeAdd(settings.FEATURED_FEE_FOR_JOB)" name="featured" class="form-control" id="is_featured" ng-required="false">
+                                      <span></span>
+                                      </label> </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <div class="form-group">
+                                                        <div class="label label-info label-orage">{{'Featured'|translate}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <h4>250% {{'Higher success rate'|translate}}!</h4>
+                                                        <p> {{'Our hands on recruitment service ensures you get the best results from your job. Our recruiters personally review your proposals saving you time vetting freelancers. Let us find to right person
+                                                            for the job'|translate}}. </p>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <h4> <span ng-if="settings.FEATURED_FEE_FOR_JOB == 0">
+                                                                                        {{'Free'|translate}}
+                                  </span> <span ng-if="settings.FEATURED_FEE_FOR_JOB > 0">
+                                       <amount-display  amount='{{settings.FEATURED_FEE_FOR_JOB}}' ng-if="settings.FEATURED_FEE_FOR_JOB"></amount-display>
+                                  </span> </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option-innr">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="pull-left">
+                                                    <div class="form-group">
+                                                        <div class="checkbox"> <label for="is_urgent">
+                                   <input type="checkbox" ng-model="job.is_urgent" ng-click="projectUrgentFeeAdd(settings.URGENT_FEE_FOR_JOB)" name="urgent" class="form-control" id="is_urgent" ng-required="false">
+                                   <span></span>
+                                   </label> </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <div class="form-group">
+                                                        <div class="label label-info label-red">{{'Urgent'|translate}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <p> {{'Our hands on recruitment service ensures you get the best results from your job. Our recruiters personally review your proposals saving you time vetting freelancers. Let us find to right person
+                                                            for the job'|translate}}. </p>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <h4> <span ng-if="settings.URGENT_FEE_FOR_JOB == 0">
+                                                                                        {{'Free'|translate}}
+                                  </span> <span ng-if="settings.URGENT_FEE_FOR_JOB > 0">
+                                      <amount-display  amount='{{settings.URGENT_FEE_FOR_JOB}}' ng-if="settings.URGENT_FEE_FOR_JOB"></amount-display>
+                                  </span> </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="pull-right total-fee"> <label for="is_total">{{'JOBS TOTAL FEE'|translate}}
+                        <span class="js-total">
+                         <label ng-if="settings.JOB_TOTAL_FEE == 0">
+                                     {{'Free'|translate}}
+                                  </label>
+                                   <label ng-if="settings.JOB_TOTAL_FEE > 0">
+                                    <strong class="total-fee-amount">    
+                                        <amount-display  amount='{{settings.JOB_TOTAL_FEE}}' ng-if="settings.JOB_TOTAL_FEE && amount_find"></amount-display></strong> 
+                                  </label> </span>
+                            </p>
+                    </div>
+                    <div class="form-group"> <span ng-if="job.job_status_id == 1">
+                        <button type="submit" ng-show="save_btn" class="btn btn-primary" disabled> {{'Publish this Job'|translate}} </button>
+                        <button title="Publish this Job" type="submit" ng-click="submit(1, jobAdd.$valid)" class="btn btn-primary" ng-show="!save_btn">{{'Publish this Job'|translate}}</button>
+                        <button title="Save as Draft" type="button" ng-click="submit(2, jobAdd.$valid)" class="btn btn-primary">{{'Save as Draft'|translate}}</button>       </span> <span ng-if="job.job_status_id != 1">
+                        <button  type="submit" title="Update" type="button" ng-click="submit(1, jobAdd.$valid)" class="btn btn-primary" ng-show="!save_btn">{{'Update'|translate}}</button>     
+                        <button type="submit" ng-show="save_btn" class="btn btn-primary" disabled> {{'Update'|translate}} </button>  
+                        
+                        </span> </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <div class="post-project">
+                    <div class="bg-primary">
+                        <h4 class="text-center no-mar">{{"IT'S FREE TO POST A JOB"|translate}}!</h4>
+                    </div>
+                    <ul class="list-unstyled clearfix">
+                        <li> <span class="sprite sprite-head-check2"> </span> <span class="menu-content">{{'Post your jobs seamlessly at first.'|translate}} </span></li>
+                        <li> <span class="sprite sprite-head-check2"> </span> <span class="menu-content"> {{'Look at the inbound profiles of several Getlancers.'|translate}} </span> </li>
+                        <li> <span class="sprite sprite-head-check2"> </span> <span class="menu-content"> {{'Notify and see them working immediately.'|translate}} </span> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

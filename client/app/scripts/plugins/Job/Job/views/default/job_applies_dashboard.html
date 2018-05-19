@@ -1,0 +1,129 @@
+<div class="clearfix" ng-controller="JobAppliesListController">
+    <div>
+        <div class="big-mspace text-center">
+            <ul class="list-inline dashboard-list text-center project-lists">
+                <li ng-class="{active:job_stats == null}" data-class="job_stats">
+                    <span class="badge badge-yellow">{{all}}</span>
+                    <p class="no-mar" ng-click="filterByStatus(null,'all')">All</p>
+                </li>
+                  <li ng-click= "filterByStatus(1, 'New')" title="New" ng-class="{active:job_stats == 1}" data-class="tabType">
+                    <span class="badge badge-blue">{{jobStatusCount[0].job_apply_count}}</span>
+                    <p class="no-mar">{{'New'|translate}}</p>
+                </li>
+                 <li ng-click= "filterByStatus(2, 'Inprocess')" title="Inprocess" ng-class="{active:job_stats == 2}" data-class="tabType">
+                    <span class="badge badge-pink">{{jobStatusCount[1].job_apply_count}}</span>
+                    <p class="no-mar">{{'Inprocess'|translate}}</p>
+                </li>
+                 <li ng-click= "filterByStatus(3, 'Selected')" title="Selected" ng-class="{active:job_stats == 3}" data-class="tabType">
+                    <span class="badge badge-orange">{{jobStatusCount[2].job_apply_count}}</span>
+                    <p class="no-mar">{{'Selected'|translate}}</p>
+                </li>
+                 <li ng-click= "filterByStatus(4, 'Rejected')" title="Rejected" ng-class="{active:job_stats == 4}" data-class="tabType">
+                    <span class="badge badge-green">{{jobStatusCount[3].job_apply_count}}</span>
+                    <p class="no-mar">{{'Rejected'|translate}}</p>
+                </li>
+               
+            </ul>
+        </div>
+        <div class="col-xs-12">
+            <div class="table-block job-applies-exam">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th class='text-center'> {{'Status' | translate}} </th>
+                                <th> {{'Job' | translate}} </i>
+                                </th>
+                                <th class="cursor"> {{'Applicant' | translate}} </th>
+                                <th class="cursor"> <a ng-click="orderByRatings(sortby)"><span class="blackc">{{'Ratings' | translate}}</span>
+                                <i  class="fa fa-angle-{{total_resume_rating}}" aria-hidden="true"></i>
+                            </a> </th>
+                                <th class="cursor text-center">
+                                    <a ng-click="orderByFeedbacks(sortby)"> <span class="blackc">{{'Feedbacks' | translate}}</span> <i class="fa fa-angle-{{resume_rating_count}}" aria-hidden="true"></i> </a>
+                                </th>
+                                <th class="cursor"> <a ng-click="orderByAppliedOn(sortby)"><span class="blackc">{{'Applied On' | translate}}</span>
+                                <i class="fa fa-angle-{{created_at}}" aria-hidden="true"></i>
+                            </a> </th>
+                                <th  class='text-center' width="100">{{'Action' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="appliesjob in appliesjobs">
+                                <td class='text-center'> 
+                                    <div class="frm-select right-adjust">
+                                        <select name="flagCategory" ng-change="jobStatusApply(appliesjob.job_apply_status_id, appliesjob.id)" ng-model="appliesjob.job_apply_status_id" class="form-control cursor" ng-required="true" ng-options="ApplyStatus.id as ApplyStatus.name for ApplyStatus in jobStatsCount | orderBy:'id'">
+                                                <option value="{{ApplyStatus.id}}">{{'Please Select'|translate}}</option>
+                                        </select> 
+                                    </div>
+                                </td>
+                                <td> <span class="c"> 
+                                        <a ui-sref="jobs_view({id: appliesjob.job.id})" >
+                                            {{appliesjob.job.title | capitalize}}
+                                        </a>
+                                    </span> </td>
+                                <td>
+                                    <a href="users/{{appliesjob.user.id}}/{{appliesjob.user.username}}"> {{appliesjob.user.username}}</a>
+                                    <div>
+                                        <ul class="list-inline show-Skills">
+                                            <li class="skill-certificate" ng-repeat="exam_user in  appliesjob.exams_users" ng-mouseover="showhideSkills(appliesjob.user.id, 1)" ng-if="exam_user.user_id == appliesjob.user.id">
+                                                <a href="#"><img ng-src="{{exam_user.exam_image}}" title="{{exam_user.exam.title}}" alt="[Image:
+                                        {{exam_user.exam.title}}]" class="center-block"></a>
+                                            </li>
+                                            <li>
+                                                <div class="user-certificate-skills" id="skills-{{appliesjob.user.id}}" ng-mouseleave="showhideSkills(appliesjob.user.id,2)">
+                                                    <h5 class="text-b"> {{'Passed Freelancer Certifications' | translate}}</h5>
+                                                    <div  ng-repeat="exam_user in  appliesjob.exams_users">
+                                                        <div class="certificates-list">
+                                                            <ul class="list-unstyled no-mar">
+                                                                <li ng-if="exam_user.user_id == appliesjob.user.id">
+                                                                    <a href="#" title="{{exam_user.exam.title}}" class="text-info">
+                                                                        {{exam_user.exam.title}} {{exam_user.exam_level.name}}
+                                                                    </a> 
+                                                                    ({{exam_user.exam_user_per |number:0}}%, {{exam_user.percentile_rank}} percentile) 
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td> <span class="c star-rating" ng-if="parseInt(appliesjob.resume_rating_count) > 0">
+                                        <input-stars ng-model="value" ng-init="value=appliesjob.total_resume_rating / appliesjob.resume_rating_count" max="{{StarCount.JobsResume}}" readonly="true"></input-stars>
+                                    </span> <span class="c" ng-if="parseInt(appliesjob.resume_rating_count) == 0"> 
+                                        -
+                                    </span> </td>
+                                <td class="text-center"> <span class="c">{{appliesjob.resume_rating_count | number:1}}</span> </td>
+                                <td><span class="c">{{ appliesjob.created_at  | date_format : DateFormat.view }}</span></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="request-btn btn btn-primary dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="true">{{'Action'|translate}} <i class="fa fa-angle-down fa-fw" aria-hidden="true"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li class="cursor">
+                                                <span download-file attachment="{{appliesjob.attachment}}" downloadlable="<i class='fa fa-download'> </i>"> </span>
+                                            </li>
+                                            <li class="cursor">
+                                                <a ui-sref="applies_jobs_view({id:appliesjob.id})" class="cursor"> <i class="fa fa-eye"> </i> {{'View'|translate}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-if="!appliesjobs.length && !loader" class="text-center text-danger top-mspace">
+                                <td colspan="8"> <span> {{'No records available' | translate}}</span> </td>
+                            </tr>
+                            <tr ng-if="!appliesjobs.length && loader" class="text-center">
+                                <td colspan="8"> <span>
+                                <img ng-src="images/contest_loader.gif" alt="loading " title="loading">
+                                </span> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

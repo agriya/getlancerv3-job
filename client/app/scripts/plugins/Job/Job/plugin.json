@@ -1,0 +1,10 @@
+{
+	"name": "Job", 
+	"class": "fa fa-2x fa-briefcase",
+	"description": "Job",
+	"dependencies": "Job",
+	"module_id": "829",
+	"module_hash": "4cbb53307c284716101c9b5730f9a3d6",
+	"display_order": "10",
+	"plugin_name":"Job/Job"
+}

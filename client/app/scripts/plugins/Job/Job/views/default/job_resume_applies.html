@@ -1,0 +1,56 @@
+<div class="submit-resume">
+    <div class="navbar-default">  
+        <form class="form-horizontal adminpg-form" name="applyJob" role="form" ng-submit="submit(applyJob.$valid)" novalidate>
+            <div class="clearfix">
+                <div class="col-sm-12">
+                    <div class="panel">
+                        <div class="sep-bot">
+                            <button type="button" class="close" data-dismiss="modal" ng-click="closemodel()">&times;</button>
+                            <h3 class="no-mar"> {{'Submit Your Resume'|translate}}</h3>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="inputCoverLetter" class="control-label">{{'Cover Letter'|translate}}
+                                    <span class="error">*</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <textarea type="text" rows="5" name="inputCoverLetter" ng-model="job_apply.cover_letter" class="form-control" id="inputCoverLetter" ng-required="true" ng-minlength="25"></textarea>
+                                <span class="error" ng-show="(applyJob.$submitted || applyJob.inputCoverLetter.$touched) && (applyJob.inputCoverLetter.$pristine || applyJob.inputCoverLetter.$invalid) && (applyJob.inputCoverLetter.$error.minlength)">
+                                    {{'Minimum length is 25'| translate }} 
+                                </span>
+                                <span class="error" ng-show="(applyJob.$submitted || applyJob.inputCoverLetter.$touched) && (applyJob.inputCoverLetter.$pristine || applyJob.inputCoverLetter.$invalid) && (applyJob.inputCoverLetter.$error.required)">
+                                    {{'Required'| translate }} 
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="col-sm-12"> <label for="latitude" class="control-label">{{'Resume'|translate}}<span class="error">*</span></label> </div>
+                            <div class="col-sm-12">
+                                <!--<input type="file" ngf-select ng-model="file" name="file" ng-change="upload(file)" class="underline text-red" ngf-accept="'image/*,application/doc'" ngf-pattern="'image/*,application/doc'" ng-required="true">-->
+                                <div class="file-upload text-left">
+                                    <label for="real">
+                                        <i class="fa fa-plus media-middle fa-fw"></i>{{'UPLOAD FILE'|translate}}                                </label>
+                                    <input type="text" name="upload" class="form-control" id="custom-upload" />
+                                </div>
+                                <input type="file" ngf-select ng-model="file" name="file" ng-change="upload(file)"  id="real" class="realupload hide">
+                                <div ng-if='$root.settings.ALLOWED_EXTENSIONS_OF_RESUME_FOR_JOB_APPLY'>
+                                                <span class="grayc help-block"><small>{{'Allowed extensions:'|translate}} 
+                                                {{$root.settings.ALLOWED_EXTENSIONS_OF_RESUME_FOR_JOB_APPLY}}</small></span>
+                                                <span class="error bot-space" ng-if="error_message && error_message !== ''">
+                                                {{error_message}}</span>
+                                                </div>
+                                <!--<span class="error" ng-show="(applyJob.$submitted || applyJob.file.$touched) && (applyJob.file.$pristine || applyJob.file.$invalid) && (applyJob.file.$error.required)"> {{'Resume is required'| translate }} </span> -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class=" col-sm-12">
+                                <button type="submit" ng-show="job_resume" class="btn btn-primary" disabled>{{'Submit'|translate}}</button> <button type="submit" ng-click="submit()" class="btn btn-primary" ng-show="!job_resume">{{'Submit'|translate}}</button>                                    <button type="button" class="btn btn-danger" ng-click="closemodel()">{{'Cancel'|translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>    
+    </div>
+</div>
