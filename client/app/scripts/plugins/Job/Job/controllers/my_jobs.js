@@ -7,7 +7,7 @@
  * This is my jobs controller having the methods init. and function getJobData. It is used for controlling the my jobs listing functionalities.
  **/
 angular.module('getlancerApp.Job')
-    .controller('MyJobsController', ['$scope', '$rootScope', '$window', '$filter', '$state', 'MyJobsFactory', 'JobStatusCountFactory', 'JobCategoriesFactory', 'JobSkillsFactory', 'JobSalaryTypeFactory', 'Upload', '$timeout', 'DateFormat', '$cookies', 'JobsEdit', 'SweetAlert', 'flash', function($scope, $rootScope, $window, $filter, $state, MyJobsFactory, JobStatusCountFactory, JobCategoriesFactory, JobSkillsFactory, JobSalaryTypeFactory, Upload, $timeout, DateFormat, $cookies, JobsEdit, SweetAlert, flash) {
+    .controller('MyJobsController', ['$scope', '$rootScope', '$window', '$filter', '$state', 'MyJobsFactory', 'JobStatusCountFactory', 'JobCategoriesFactory', 'JobSkillsFactory', 'JobSalaryTypeFactory', 'Upload', '$timeout', 'DateFormat', '$cookies', 'JobsEdit', 'flash', function($scope, $rootScope, $window, $filter, $state, MyJobsFactory, JobStatusCountFactory, JobCategoriesFactory, JobSkillsFactory, JobSalaryTypeFactory, Upload, $timeout, DateFormat, $cookies, JobsEdit, flash) {
         var params = [];
         $scope.DateFormat = DateFormat;
         $scope.sortby = params.sortby = 'desc';
@@ -176,7 +176,7 @@ angular.module('getlancerApp.Job')
             getJobData(params);
         };
         $scope.archived = function(id) {
-            SweetAlert.swal({
+            swal({ //jshint ignore:line
                 title: $filter("translate")("Are you sure you want to archived this job?"),
                 type: "warning",
                 showCancelButton: true,
@@ -185,7 +185,7 @@ angular.module('getlancerApp.Job')
                 cancelButtonText: "Cancel",
                 closeOnConfirm: true,
                 animation:false,
-            }, function(isConfirm) {
+            }).then(function (isConfirm) {
                 if (isConfirm) {
                     var flashMessage;
                     $scope.job = {};

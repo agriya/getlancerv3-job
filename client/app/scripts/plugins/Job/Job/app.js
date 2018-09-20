@@ -43,7 +43,6 @@ angular.module('getlancerApp.Job', [
     'ngFileUpload',
     'angular-loading-bar',
     'ngAnimate',
-    'oitozero.ngSweetAlert',
     'checklist-model',
     'angularjs-dropdown-multiselect',
     'ngTagsInput',

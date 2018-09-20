@@ -7,7 +7,7 @@
  * This is my jobs controller having the methods init. and function getJobData. It is used for controlling the my jobs listing functionalities.
  **/
 angular.module('getlancerApp.Job')
-    .controller('MyJobsDashboardController', ['$scope', '$rootScope', '$window', '$filter', '$state', 'MyJobsFactory', 'JobStatusCountFactory', 'JobCategoriesFactory', 'JobSkillsFactory', 'JobSalaryTypeFactory', 'Upload', '$timeout', 'DateFormat', '$cookies', 'JobsEdit', 'SweetAlert', 'flash', 'Slug', function ($scope, $rootScope, $window, $filter, $state, MyJobsFactory, JobStatusCountFactory, JobCategoriesFactory, JobSkillsFactory, JobSalaryTypeFactory, Upload, $timeout, DateFormat, $cookies, JobsEdit, SweetAlert, flash, Slug) {
+    .controller('MyJobsDashboardController', ['$scope', '$rootScope', '$window', '$filter', '$state', 'MyJobsFactory', 'JobStatusCountFactory', 'JobCategoriesFactory', 'JobSkillsFactory', 'JobSalaryTypeFactory', 'Upload', '$timeout', 'DateFormat', '$cookies', 'JobsEdit', 'flash', 'Slug', function ($scope, $rootScope, $window, $filter, $state, MyJobsFactory, JobStatusCountFactory, JobCategoriesFactory, JobSkillsFactory, JobSalaryTypeFactory, Upload, $timeout, DateFormat, $cookies, JobsEdit, flash, Slug) {
         var params = [];
         $scope.DateFormat = DateFormat;
         $scope.sortby = params.sortby = 'desc';
@@ -193,7 +193,7 @@ angular.module('getlancerApp.Job')
             getJobData(params);
         };
         $scope.archived = function (id) {
-            SweetAlert.swal({
+            swal({ //jshint ignore:line
                 title: $filter("translate")("Are you sure you want to archived this job?"),
                 type: "warning",
                 showCancelButton: true,
