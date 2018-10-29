@@ -4,7 +4,7 @@ Getlancer Jobs, part of Getlancer Suite (Bidding, Quote, Jobs, Portfolio) is an 
 
 > This is project is part of Agriya Open Source efforts. Getlancer was originally a paid script and was selling around 60000 Euros. It is now released under dual license (OSL 3.0 & Commercial) for open source community benefits.
 
-![Thumbtack Clone Script](https://user-images.githubusercontent.com/43058084/45251565-e7fd3500-b365-11e8-8e83-34f2983d6f67.png)
+![jobs_banner](https://user-images.githubusercontent.com/4700341/47653992-e60a6200-dbaf-11e8-89b2-ea8d86951c01.png)
 
 
 ## Support
@@ -28,7 +28,7 @@ Agriya Getlancer Suite is a complete freelancer marketplace platform that caters
 
 [Coroflot clone](https://www.agriya.com/products/coroflot-clone) script defines two communities, Employer and Freelancer.Employer lists numerous category of freelancer jobs with all necessar details. Employer have to pay reliable listing fee for posting their freelancer jons in your freelancing business. Now Freelancer browse job and apply. 
 
-![Thumbtack Clone](https://user-images.githubusercontent.com/43058084/45252743-aecec000-b379-11e8-8e42-aa13636f3c4b.png)
+![jobs_work](https://user-images.githubusercontent.com/4700341/47653978-de4abd80-dbaf-11e8-83df-c9c08043a3cd.png)
 
 ## Features
 
