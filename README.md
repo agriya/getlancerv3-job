@@ -1,6 +1,6 @@
-# Getlancer Bidding
+# Getlancer Jobs
 
-Getlancer Bidding, part of Getlancer Suite (Bidding, Quote, Jobs, Portfolio) is an open source service marketplace script that is capable to run sites similar to Freelancer clone. It is written in AngularJS with REST API for high performance in mind.
+Getlancer Jobs, part of Getlancer Suite (Bidding, Quote, Jobs, Portfolio) is an open source service marketplace script that is capable to run sites similar to Coroflot clone. It is written in AngularJS with REST API for high performance in mind.
 
 > This is project is part of Agriya Open Source efforts. Getlancer was originally a paid script and was selling around 60000 Euros. It is now released under dual license (OSL 3.0 & Commercial) for open source community benefits.
 
@@ -9,7 +9,7 @@ Getlancer Bidding, part of Getlancer Suite (Bidding, Quote, Jobs, Portfolio) is 
 
 ## Support
 
-Getlancer Bidding is an open source project. Full commercial support (commercial license, customization, training, etc) are available through [Getlancer  platform support](https://www.agriya.com/products/freelancer-clone)
+Getlancer Job is an open source project. Full commercial support (commercial license, customization, training, etc) are available through [Getlancer  platform support](https://www.agriya.com/products/coroflot-clone)
 
 Theming partner [CSSilize for design and HTML conversions](http://cssilize.com/)
 
@@ -26,10 +26,7 @@ Agriya Getlancer Suite is a complete freelancer marketplace platform that caters
 
 ## How it works
 
-[Freelancer clone](https://www.agriya.com/products/freelancer-clone) script defines two communities, Employer and Freelancer. Employers to post the project with all necessary details and upload it within minutes. Now freelancer browse apt projects and bid. After freelancer completed the project based on winner selected by employer, employer accept that completion and release the payment.
-
-As well as employer can Hire freelancer. Which is used to search suitable freelancer for your projects effortlessly.
- 
+[Coroflot clone](https://www.agriya.com/products/coroflot-clone) script defines two communities, Employer and Freelancer.Employer lists numerous category of freelancer jobs with all necessar details. Employer have to pay reliable listing fee for posting their freelancer jons in your freelancing business. Now Freelancer browse job and apply. 
 
 ![Thumbtack Clone](https://user-images.githubusercontent.com/43058084/45252743-aecec000-b379-11e8-8e42-aa13636f3c4b.png)
 
@@ -45,7 +42,7 @@ Whatever be your business model is, we made our script with dynamic form builder
 
 ### Dual Sign up
 
-Take pleasure in registering to the freelancer bidding site both as freelancer or employers. It assures hassle-free registration process
+Take pleasure in registering to the freelancer bidding site both as freelancer or employers. It assures hassle-free registration process.
 
 ### Interoperability
 
@@ -92,11 +89,11 @@ Our approach is similar to Magento. If anything is not clear, please [contact us
 All Submissions you make to Getlancer through GitHub are subject to the following terms and conditions:
 
 * You grant Agriya a perpetual, worldwide, non-exclusive, no charge, royalty free, irrevocable license under your applicable copyrights and patents to reproduce, prepare derivative works of, display, publicly perform, sublicense and distribute any feedback, ideas, code, or other information ("Submission") you submit through GitHub.
-* Your Submission is an original work of authorship and you are the owner or are legally entitled to grant the license stated above. 
+* Your Submission is an original work of authorship and you are the owner or are legally entitled to grant the license stated above.
 
 
 ### License
 
 Copyright (c) 2014-2018 [Agriya](https://www.agriya.com/).
 
-Dual License (OSL 3.0 & [Commercial License](https://www.agriya.com/contact)) 
+Dual License (OSL 3.0 & [Commercial License](https://www.agriya.com/contact))
