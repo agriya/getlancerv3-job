@@ -28,7 +28,7 @@ Agriya Getlancer Suite is a complete freelancer marketplace platform that caters
 
 [Coroflot clone](https://www.agriya.com/products/coroflot-clone) script defines two communities, Employer and Freelancer.Employer lists numerous category of freelancer jobs with all necessary details. Employer have to pay reliable listing fee for posting their freelancer jobs in your freelancing business. Now Freelancer browse job and apply. 
 
-(![jobs_work](https://user-images.githubusercontent.com/4700341/47653978-de4abd80-dbaf-11e8-83df-c9c08043a3cd.png))(https://www.agriya.com/products/coroflot-clone)
+ [![jobs_work](https://user-images.githubusercontent.com/4700341/47653978-de4abd80-dbaf-11e8-83df-c9c08043a3cd.png)](https://www.agriya.com/products/coroflot-clone)
 
 ## Features
 
