@@ -2,9 +2,9 @@
 
 Getlancer Jobs, part of Getlancer Suite (Bidding, Quote, Jobs, Portfolio) is an open source service marketplace script that is capable to run sites similar to Coroflot clone. It is written in AngularJS with REST API for high performance in mind.
 
-> This is project is part of Agriya Open Source efforts. Getlancer was originally a paid script and was selling around 60000 Euros. It is now released under dual license (OSL 3.0 & Commercial) for open source community benefits.
+> This project is part of Agriya Open Source efforts. Getlancer was originally a paid script and was selling around 60000 Euros. It is now released under dual license ([OSL 3.0](https://www.agriya.com/resources) & [Commercial](https://www.agriya.com/products/coroflot-clone)) for open source community benefits.
 
-![jobs_banner](https://user-images.githubusercontent.com/4700341/47653992-e60a6200-dbaf-11e8-89b2-ea8d86951c01.png)
+[![jobs_banner](https://user-images.githubusercontent.com/4700341/47653992-e60a6200-dbaf-11e8-89b2-ea8d86951c01.png)](https://www.agriya.com/products/coroflot-clone)
 
 
 ## Support
@@ -17,18 +17,18 @@ Theming partner [CSSilize for design and HTML conversions](http://cssilize.com/)
 
 Agriya Getlancer Suite is a complete freelancer marketplace platform that caters to bidding, quote, jobs and portfolio business models. Any website can be built in combination of these modules, say with bidding and quote, or with all, etc.
 
-* Getlancer Bidding - bidding marketplaces like or clone of Freelancer, Guru, elance, Scriptlance, oDesk, Redbeacon, PeoplePerHour, McroWorkers, etc
-* Getlancer Quote - quote marketplaces like or clone of Thumbtack, Zaarly, Localmind, Redbeacon, TaskRabbit, Urgntly, HouseJoy
-* Getlancer Jobs - jobs marketplaces like or clone of Startuply, Coroflot, AuthenticJobs, Guru, WorkInStartups, dribbble, behance
-* Getlancer Portfolio - portfolio based marketplaces like or clone of dribbble, behance, Coroflot
+* [Getlancer Bidding](https://github.com/agriya/getlancerv3-bidding) - bidding marketplaces like or clone of Freelancer, Guru, elance, Scriptlance, oDesk, Redbeacon, PeoplePerHour, McroWorkers, etc.
+* [Getlancer Quote](https://github.com/agriya/getlancerv3-quote) - quote marketplaces like or clone of Thumbtack, Zaarly, Localmind, Redbeacon, TaskRabbit, Urgntly, HouseJoy.
+* [Getlancer Jobs](https://github.com/agriya/getlancerv3-job) - jobs marketplaces like or clone of Startuply, Coroflot, AuthenticJobs, Guru, WorkInStartups, dribbble, behance.
+* [Getlancer Portfolio](https://github.com/agriya/getlancerv3-portfolio) - portfolio based marketplaces like or clone of dribbble, behance, Coroflot.
 
 
 
 ## How it works
 
-[Coroflot clone](https://www.agriya.com/products/coroflot-clone) script defines two communities, Employer and Freelancer.Employer lists numerous category of freelancer jobs with all necessar details. Employer have to pay reliable listing fee for posting their freelancer jons in your freelancing business. Now Freelancer browse job and apply. 
+[Coroflot clone](https://www.agriya.com/products/coroflot-clone) script defines two communities, Employer and Freelancer.Employer lists numerous category of freelancer jobs with all necessary details. Employer have to pay reliable listing fee for posting their freelancer jobs in your freelancing business. Now Freelancer browse job and apply. 
 
-![jobs_work](https://user-images.githubusercontent.com/4700341/47653978-de4abd80-dbaf-11e8-83df-c9c08043a3cd.png)
+(![jobs_work](https://user-images.githubusercontent.com/4700341/47653978-de4abd80-dbaf-11e8-83df-c9c08043a3cd.png))(https://www.agriya.com/products/coroflot-clone)
 
 ## Features
 
@@ -38,7 +38,11 @@ Ease of finding your local service provider with our Geo-based listing functiona
   
 ### Intuitive Category Management
 
-Whatever be your business model is, we made our script with dynamic form builder whereby you can create any service to the extent without having any difficulties.
+Whatever be your business model is
+
+
+
+we made our script with dynamic form builder whereby you can create any service to the extent without having any difficulties.
 
 ### Dual Sign up
 
@@ -75,7 +79,7 @@ Most of the functionalities are automated as it feels the current stats and take
 * JavaScript dependencies are handled through `bower` (Refer `/client/`)
 * Needs writable permission for `/tmp/` and `/media/` folders found within project path
 * Build tasks are handled through `grunt`
-* Database schema `/sql/getlancer_with_sample_data.sql`
+* Database schema `/sql/getlancer_with_empty_data.sql
 * Cron with below:
 ```bash
 # Common
@@ -96,4 +100,4 @@ All Submissions you make to Getlancer through GitHub are subject to the followin
 
 Copyright (c) 2014-2018 [Agriya](https://www.agriya.com/).
 
-Dual License (OSL 3.0 & [Commercial License](https://www.agriya.com/contact))
+Dual License ([OSL 3.0](https://www.agriya.com/resources) & [Commercial License](https://www.agriya.com/contact))
