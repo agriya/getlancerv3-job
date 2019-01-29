@@ -1,0 +1,63 @@
+<div>
+    <div class="resume-view lin-heig22">
+        <div class="media" ng-repeat="resumeRating in resumeRatings">
+            <div class="navbar-left">
+                <a href="#" title="Megv"><img ng-src="{{resumeRatings.logo_url}}" alt="[Images: Megv]" title="{{resumeRating.user.username}}" class="user-med"></a>
+            </div>
+            <div class="media-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <p class="no-mar"> 
+                            <a ui-sref="user_profile({id:resumeRating.user.id,slug:resumeRating.user.username})">
+                                <span>{{resumeRating.user.username}}</span>
+                            </a> 
+                            <small class="ver-lft-space5 grayc">- {{resumeRating.created_at | date_format : DateFormat.view}}</small>                            
+                        </p>
+                        <p class="grayc">{{resumeRating.comment}}</p>
+                        <span class="grayc">{{'Rating'|translate}}</span>
+                        <div class="star-rating navbar-btn">
+                            <input-stars ng-model="resumeRating.rating" max="{{StarCount.JobsResume}}" readonly="true"></input-stars>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="text-danger">
+                            <a href="javascript:void(0);" class="btn btn-danger btn-sm" ng-click="resumeRatingDelete(resumeRating.id);$event.stopPropagation()"><i class="fa fa-trash fa-fw" aria-hidden="true"></i> Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="media">
+            <div class="navbar-left media-top">
+                <img ng-src="{{resumeRatings.logo_url}}" alt="[Image: User]" class="user-med" ng-if="resumeRatings.length > 0">
+                <img ng-src="{{user.userimage}}" alt="[Image: User]" class="user-med" ng-if="resumeRatings.length == 0">
+            </div>
+            <div class="media-body">
+                <form name="applyComment" role="form" ng-submit="commentAdd(applyComment.$valid)" novalidate>
+                    <div class="form-group"> 
+                        <label class="grayc">{{'Rating'|translate}}</label> 
+                        <span class="dc star-rating cursor"> 
+                            <input-stars ng-model="comment.rating_select" max="{{StarCount.JobsResume}}" on-star-click="starCount(comment.rating_select)"  name="rathing" required></input-stars>
+                            <span class="error" ng-show="(applyComment.$submitted || applyComment.rathing.$touched) && (applyComment.rathing.$pristine || applyComment.rathing.$invalid) && (applyComment.rathing.$error.required)"> {{'Required'| translate }}</span> 
+                        </span>  
+                        <div class="row">                      
+                        <div class="col-sm-10">
+                            <label for="comments1" class="sr-only">comment</label>                         
+                            <textarea type="text" rows="5" name="inputComment" ng-model="comment.resumeComment" class="form-control" id="inputComment" ng-required="true"></textarea> 
+                            <span class="error" ng-show="(applyComment.$submitted || applyComment.inputComment.$touched) && (applyComment.inputComment.$pristine || applyComment.inputComment.$invalid) && (applyComment.inputComment.$error.required)"> {{'Required'| translate }} </span>
+                        </div> 
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <ul class="list-inline">
+                            <li> 
+                                <button ng-show="save_btn" class="btn btn-primary btn-send bor-radi24" disabled>{{'Submit'|translate}}</button> 
+                                <button type="submit" class="btn btn-primary btn-send bor-radi24" ng-show="!save_btn">{{'Submit'|translate}}</button>                                    
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
