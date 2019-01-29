@@ -1,0 +1,10 @@
+{
+	"name": "ResumeRating", 
+	"class": "fa fa-2x fa-star",
+	"description": "ResumeRating",
+	"dependencies": "Job",
+	"module_id": "831",
+	"module_hash": "39b4be9ba55dce295cbd52586c667970",
+	"display_order": "11",
+	"plugin_name":"Job/ResumeRating"
+}

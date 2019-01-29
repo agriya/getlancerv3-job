@@ -1,0 +1,10 @@
+{
+	"name": "JobFlag", 
+	"class": "fa fa-2x fa-flag",
+	"description": "JobFlag",
+	"dependencies": "Job",
+	"module_id": "830",
+	"module_hash": "9ca74dca3f12fa997f0bf52964e9cab2",
+	"display_order": "14",
+	"plugin_name":"Job/JobFlag"
+}
